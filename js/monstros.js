@@ -12,7 +12,7 @@
 //         os nomes dos itens ficam em itens.js
 const TIPOS_MONSTRO = {
   rato: {
-    nome: 'Rato', vida: 20, ataqueMax: 6, defesa: 1, xp: 5, ouro: [0, 4], passo: 500, visao: 4,
+    nome: 'Rato', vida: 20, ataqueMax: 3, defesa: 1, xp: 5, ouro: [1, 4], passo: 500, visao: 4,
     loot: [
       { item: 'queijo',    chance: 0.40, qtd: [1, 2] },
       { item: 'rabo_rato', chance: 0.50, qtd: [1, 1] },
@@ -20,14 +20,14 @@ const TIPOS_MONSTRO = {
     ],
   },
   cobra: {
-    nome: 'Cobra', feminino: true, vida: 30, ataqueMax: 10, defesa: 2, xp: 10, ouro: [0, 6], passo: 450, visao: 4,
+    nome: 'Cobra', feminino: true, vida: 30, ataqueMax: 6, defesa: 2, xp: 10, ouro: [2, 6], passo: 450, visao: 4,
     loot: [
       { item: 'pele_cobra', chance: 0.35, qtd: [1, 1] },
       { item: 'pocao',      chance: 0.04, qtd: [1, 1] },
     ],
   },
   lobo: {
-    nome: 'Lobo', vida: 55, ataqueMax: 18, defesa: 4, xp: 20, ouro: [2, 12], passo: 330, visao: 6,
+    nome: 'Lobo', vida: 55, ataqueMax: 12, defesa: 4, xp: 20, ouro: [5, 12], passo: 330, visao: 6,
     loot: [
       { item: 'carne',       chance: 0.60, qtd: [1, 3] },
       { item: 'presa_lobo',  chance: 0.25, qtd: [1, 2] },
@@ -37,7 +37,7 @@ const TIPOS_MONSTRO = {
     ],
   },
   urso: {
-    nome: 'Urso', vida: 150, ataqueMax: 30, defesa: 8, xp: 70, ouro: [10, 30], passo: 520, visao: 5,
+    nome: 'Urso', vida: 150, ataqueMax: 25, defesa: 8, xp: 70, ouro: [10, 30], passo: 520, visao: 5,
     loot: [
       { item: 'carne',          chance: 0.70, qtd: [1, 4] },
       { item: 'garra_urso',     chance: 0.30, qtd: [1, 2] },
