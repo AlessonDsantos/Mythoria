@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mythoria</title>
+  <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+
+  <!-- =============== TELA 1: Boas-vindas =============== -->
+  <section id="tela-boas-vindas" class="tela tela-entrada">
+    <div class="capa"></div>
+    <div class="boas-vindas-conteudo">
+      <button id="btn-comecar" class="btn-grande">Começar a aventura</button>
+    </div>
+    <button id="btn-creditos" class="link-creditos">Créditos</button>
+  </section>
+
+  <!-- =============== TELA 2: Escolher personagem =============== -->
+  <section id="tela-selecao" class="tela tela-entrada escondido">
+    <div class="capa capa-escura"></div>
+    <div class="caixa-entrada">
+      <h2>Escolha seu personagem</h2>
+      <div id="lista-personagens" class="lista-personagens"></div>
+      <button id="btn-novo-personagem" class="btn btn-secundario">+ Criar novo personagem</button>
+    </div>
+  </section>
+
+  <!-- =============== TELA 3: Criar personagem =============== -->
+  <section id="tela-criacao" class="tela tela-entrada escondido">
+    <div class="capa capa-escura"></div>
+    <form id="form-criar" class="caixa-entrada" autocomplete="off">
+      <h2>Criar personagem</h2>
+      <label class="campo">
+        <span>Nome</span>
+        <input id="campo-nome" type="text" maxlength="16" placeholder="Ex.: Arthur">
+      </label>
+      <p id="erro-nome" class="erro"></p>
+      <span class="rotulo">Classe</span>
+      <div id="escolha-classe" class="escolha-classe"></div>
+      <div class="botoes-entrada">
+        <button type="button" id="btn-voltar-selecao" class="btn btn-secundario">Voltar</button>
+        <button type="submit" class="btn">Criar e entrar</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- =============== TELA 4: O jogo =============== -->
+  <main id="tela-jogo" class="tela jogo escondido">
+    <header class="topo">
+      <h1>Mythoria</h1>
+      <span id="txt-versao" class="versao"></span>
+      <span id="indicador-save" class="indicador-save"></span>
+      <button id="btn-sair" class="btn btn-perigo btn-pequeno">Sair</button>
+    </header>
+
+    <div class="layout">
+      <!-- ===== Coluna do jogo ===== -->
+      <div class="coluna-jogo">
+        <div class="area-tela">
+          <canvas id="tela"></canvas>
+
+          <!-- Janela da loja (aparece por cima do mapa) -->
+          <div id="janela-loja" class="janela-loja escondido">
+            <div class="janela-topo">
+              <span id="loja-titulo" class="janela-titulo"></span>
+              <button id="btn-fechar-loja" class="btn-x" title="Fechar (Esc)">×</button>
+            </div>
+            <p id="loja-fala" class="loja-fala"></p>
+            <div class="loja-abas">
+              <button id="aba-comprar" class="aba">Comprar</button>
+              <button id="aba-vender" class="aba">Vender</button>
+              <span class="loja-ouro">Seu ouro: <b id="loja-ouro"></b></span>
+            </div>
+            <div id="loja-lista" class="loja-lista"></div>
+          </div>
+        </div>
+
+        <!-- Barra de ação: arraste comida/poção para cá e use com 1 a 8 -->
+        <div id="barra-acao" class="barra-acao"></div>
+
+        <div class="status">
+          <span id="mensagem" class="mensagem"></span>
+        </div>
+
+        <div class="abaixo">
+          <ul id="log" class="log"></ul>
+
+          <div id="janela-corpo" class="janela janela-corpo escondido">
+            <div class="janela-topo">
+              <span id="titulo-corpo" class="janela-titulo"></span>
+              <button id="btn-fechar-corpo" class="btn-x" title="Fechar (Esc)">×</button>
+            </div>
+            <div id="grade-corpo" class="grade"></div>
+            <button id="btn-pegar-tudo" class="btn">Pegar tudo</button>
+          </div>
+        </div>
+
+        <p class="ajuda">
+          <b>Andar:</b> setas/WASD, clique no chão ou no minimapa ·
+          <b>Atacar:</b> botão direito no monstro, clique na Battle List ou <b>Espaço</b> ·
+          <b>Loot:</b> clique no corpo ou <b>E</b> ·
+          <b>Itens:</b> arraste para equipar · botão direito come/bebe ·
+          <b>1–8:</b> barra de ação · <b>H:</b> cura rápida · <b>Esc:</b> cancelar ·
+          <b>Lojas:</b> clique no NPC (nome azul)
+        </p>
+      </div>
+
+      <!-- ===== Painel lateral ===== -->
+      <aside class="lateral">
+        <div id="painel-mapa" class="painel">
+          <div class="janela-topo">
+            <span class="janela-titulo">Mapa</span>
+            <button class="btn-x btn-min" data-minimizar="painel-mapa">–</button>
+          </div>
+          <div class="conteudo-painel">
+            <canvas id="minimapa" class="minimapa" title="Clique para andar até lá"></canvas>
+          </div>
+        </div>
+
+        <div id="painel-battle" class="painel">
+          <div class="janela-topo">
+            <span class="janela-titulo">Battle List</span>
+            <button class="btn-x btn-min" data-minimizar="painel-battle">–</button>
+          </div>
+          <div class="conteudo-painel">
+            <div id="battle-list" class="battle-list"></div>
+          </div>
+        </div>
+
+        <div class="painel">
+          <div class="janela-topo">
+            <span class="janela-titulo" id="txt-classe"></span>
+            <span><span class="rotulo">Level</span> <b id="txt-level"></b></span>
+          </div>
+          <div class="barra">
+            <span class="rotulo">Vida</span>
+            <div class="barra-fundo"><div id="barra-vida" class="barra-cheia vida"></div></div>
+            <span id="txt-vida" class="barra-texto"></span>
+          </div>
+          <div class="barra">
+            <span class="rotulo">Mana</span>
+            <div class="barra-fundo"><div id="barra-mana" class="barra-cheia mana"></div></div>
+            <span id="txt-mana" class="barra-texto"></span>
+          </div>
+          <div class="barra">
+            <span class="rotulo">XP</span>
+            <div class="barra-fundo"><div id="barra-xp" class="barra-cheia xp"></div></div>
+            <span id="txt-xp" class="barra-texto"></span>
+          </div>
+          <div class="numeros">
+            <span><span class="rotulo">Defesa</span> <b id="txt-defesa"></b></span>
+            <span><span class="rotulo">Ouro</span> <b id="txt-ouro" class="ouro"></b></span>
+          </div>
+          <div id="skills" class="skills"></div>
+        </div>
+
+        <div id="painel-equip" class="painel">
+          <div class="janela-topo">
+            <span class="janela-titulo">Equipamento</span>
+            <button class="btn-x btn-min" data-minimizar="painel-equip">–</button>
+          </div>
+          <div class="conteudo-painel">
+            <div class="equip">
+              <button id="equip-capacete" class="espaco" style="grid-area: cab"></button>
+              <button id="equip-arma"     class="espaco" style="grid-area: arm"></button>
+              <button id="equip-armadura" class="espaco" style="grid-area: cor"></button>
+              <button id="equip-municao"  class="espaco" style="grid-area: mun"></button>
+              <button id="equip-calca"    class="espaco" style="grid-area: per"></button>
+              <button id="equip-botas"    class="espaco" style="grid-area: pes"></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="painel">
+          <div class="janela-topo">
+            <span class="janela-titulo">🎒 Mochila</span>
+            <span id="txt-espacos" class="rotulo"></span>
+          </div>
+          <div id="grade-mochila" class="grade"></div>
+          <div id="detalhe-item" class="detalhe escondido">
+            <b id="detalhe-nome"></b>
+            <div id="detalhe-desc" class="detalhe-desc"></div>
+            <div class="detalhe-botoes">
+              <button id="btn-usar" class="btn">Usar</button>
+              <button id="btn-jogar" class="btn btn-perigo">Jogar fora</button>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <!-- =============== Janela de confirmação =============== -->
+  <div id="modal" class="modal-fundo escondido">
+    <div class="modal">
+      <h3 id="modal-titulo"></h3>
+      <p id="modal-texto"></p>
+      <div id="modal-botoes" class="modal-botoes"></div>
+    </div>
+  </div>
+
+  <!-- A ORDEM IMPORTA: cada arquivo usa coisas definidas nos arquivos de cima -->
+  <script src="js/config.js"></script>
+  <script src="js/classes.js"></script>
+  <script src="js/mapa.js"></script>
+  <script src="js/caminho.js"></script>
+  <script src="js/itens.js"></script>
+  <script src="js/jogador.js"></script>
+  <script src="js/monstros.js"></script>
+  <script src="js/npcs.js"></script>
+  <script src="js/combate.js"></script>
+  <script src="js/inventario.js"></script>
+  <script src="js/barra.js"></script>
+  <script src="js/battlelist.js"></script>
+  <script src="js/loja.js"></script>
+  <script src="js/minimapa.js"></script>
+  <script src="js/save.js"></script>
+  <script src="js/entrada.js"></script>
+  <script src="js/arrastar.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/sprites.js"></script>
+  <script src="js/desenho.js"></script>
+  <script src="js/inicio.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
