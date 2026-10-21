@@ -29,7 +29,7 @@ const CONFIG = {
 
   // ---------- Monstros ----------
   // Quantos e quais monstros: nas áreas de caça do mapa (Tiled)
-  TEMPO_RESPAWN: 30000,   // quanto tempo até nascer outro depois de uma morte (chefes: no mapa)
+  TEMPO_RESPAWN: 60000,   // quanto tempo até nascer outro depois de uma morte (chefes: no mapa)
   TEMPO_CORPO: 60000,     // quanto tempo o corpo fica no chão (dá tempo de saquear)
 
   // ---------- Inventário e lojas ----------
@@ -44,7 +44,7 @@ const CONFIG = {
   BAU_INICIAL: 30,        // espaços que todo mundo já tem
   BAU_MAXIMO: 60,         // limite comprando mais
   BAU_PACOTE: 5,          // quantos espaços cada compra adiciona
-  BAU_PRECO_BASE: 200,    // 1ª compra custa 200, a 2ª 400, a 3ª 600...
+  BAU_PRECO_BASE: 2000,    // 1ª compra custa 200, a 2ª 400, a 3ª 600...
 
   // ---------- Save ----------
   CHAVE_SAVE: 'mythoria.personagens', // "gaveta" no localStorage com todos os personagens
