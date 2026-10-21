@@ -82,10 +82,10 @@ const TIPOS_MONSTRO = {
 
   // ---------- Campos do Leste (level 1–5) ----------
   lobo_branco: { nome: 'Lobo branco', sprite: 'lobo_branco',
-    vida: 40, ataqueMax: 16, defesa: 1, xp: 9, ouro: [1, 4], passo: 420, visao: 5,
+    vida: 30, ataqueMax: 14, defesa: 1, xp: 19, ouro: [1, 4], passo: 420, visao: 5,
     loot: [{ item: 'presa_lobo', chance: 0.08, qtd: [1, 1] }] },
   lobo_cinza: { nome: 'Lobo cinzento', sprite: 'lobo_cinza',
-    vida: 50, ataqueMax: 22, defesa: 2, xp: 17, ouro: [2, 8], passo: 360, visao: 6,
+    vida: 50, ataqueMax: 18, defesa: 2, xp: 30, ouro: [2, 8], passo: 360, visao: 6,
     loot: [{ item: 'presa_lobo', chance: 0.12, qtd: [1, 1] }, { item: 'pele_lobo', chance: 0.08, qtd: [1, 1] }] },
 
   // ---------- Pântano (level 5–10) ----------
@@ -93,19 +93,19 @@ const TIPOS_MONSTRO = {
   // De tocaia, mas cospem veneno de até 6 quadrados (e mordem de perto)
   cobra_pantano: { nome: 'Cobra do pântano', sprite: 'cobra_pantano', feminino: true, anim: ANIM.cobra_pantano, parado: true,
     alcance: 6, projetil: 'cuspe', impacto: 'veneno',
-    vida: 60, ataqueMax: 25, defesa: 4, xp: 31, ouro: [3, 12], passo: 400, visao: 6,
+    vida: 60, ataqueMax: 20, defesa: 4, xp: 41, ouro: [3, 12], passo: 400, visao: 6,
     loot: [{ item: 'pele_cobra', chance: 0.2, qtd: [1, 1] }] },
   cogumelo: { nome: 'Cogumelo venenoso', sprite: 'cogumelo', anim: ANIM.cogumelo,
-    vida: 70, ataqueMax: 25, defesa: 4, xp: 31, ouro: [3, 12], passo: 600, visao: 5,
+    vida: 70, ataqueMax: 23, defesa: 4, xp: 41, ouro: [3, 12], passo: 600, visao: 5,
     loot: [{ item: 'erva', chance: 0.3, qtd: [1, 2] }] },
   lodo: { nome: 'Lodo', sprite: 'lodo',
-    vida: 90, ataqueMax: 30, defesa: 4, xp: 40, ouro: [4, 14], passo: 620, visao: 5, loot: [] },
+    vida: 90, ataqueMax: 30, defesa: 4, xp: 50, ouro: [4, 14], passo: 620, visao: 5, loot: [] },
   planta_carnivora: { nome: 'Planta carnívora', sprite: 'planta_carnivora', feminino: true, anim: ANIM.planta_carnivora, parado: true,
-    alcance: 6, projetil: 'cuspe', impacto: 'veneno',
+    alcance: 4, projetil: 'cuspe', impacto: 'veneno',
     vida: 100, ataqueMax: 34, defesa: 5, xp: 61, ouro: [4, 16], passo: 400, visao: 6,
     loot: [{ item: 'erva', chance: 0.4, qtd: [1, 3] }] },
   bruxa_pantano: { nome: 'Bruxa do pântano', sprite: 'bruxa_pantano', feminino: true, alcance: 4, magiaNoAlvo: ['veneno'],
-    vida: 65, ataqueMax: 28, defesa: 5, xp: 63, ouro: [4, 18], passo: 480, visao: 6,
+    vida: 65, ataqueMax: 28, defesa: 5, xp: 69, ouro: [4, 18], passo: 480, visao: 6,
     loot: [{ item: 'erva', chance: 0.25, qtd: [1, 2] }, { item: 'pocao', chance: 0.05, qtd: [1, 1] }] },
 
   // ---------- Floresta Perdida (level 10–15) ----------
