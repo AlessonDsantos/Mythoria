@@ -27,7 +27,7 @@ const MAGIAS = {
 
   // ---------- Guerreiro ----------
   ictus_validus: {
-    nome: 'Ictus Validus', classe: 'guerreiro', level: 5, mana: 15, espera: 2000, forca: 1.2,
+    nome: 'Ictus Validus', classe: 'guerreiro', level: 5, mana: 15, espera: 2000, forca: 1.0,
     descricao: 'Um golpe muito forte no alvo colado em você.',
     lancar(agora) {
       const alvo = alvoAoAlcance(1); if (!alvo) return false;
@@ -60,7 +60,7 @@ const MAGIAS = {
     },
   },
   terrae_motus: {
-    nome: 'Terrae Motus', classe: 'guerreiro', level: 20, mana: 80, espera: 12000, forca: 1.3, raio: 2,
+    nome: 'Terrae Motus', classe: 'guerreiro', level: 20, mana: 80, espera: 12000, forca: 1.2, raio: 2,
     descricao: 'Terremoto: espinhos de pedra saem do chão em volta de você (área 5x5).',
     lancar(agora) {
       criarEfeito('impacto_chao', jogador.x, jogador.y, agora);
@@ -76,7 +76,7 @@ const MAGIAS = {
     },
   },
   ictus_rotatorius: {
-    nome: 'Ictus Rotatorius', classe: 'guerreiro', level: 25, mana: 90, espera: 16000, forca: 1.5,
+    nome: 'Ictus Rotatorius', classe: 'guerreiro', level: 25, mana: 90, espera: 16000, forca: 1.4,
     descricao: 'Golpe giratório: acerta todos os monstros em volta.',
     lancar(agora) {
       criarEfeito('onda', jogador.x, jogador.y, agora);
@@ -90,7 +90,7 @@ const MAGIAS = {
 
   // ---------- Arqueiro ----------
   ictus_certus: {
-    nome: 'Ictus Certus', classe: 'arqueiro', level: 5, mana: 15, espera: 2000, forca: 1.2, alcance: 6,
+    nome: 'Ictus Certus', classe: 'arqueiro', level: 5, mana: 15, espera: 2000, forca: 1.0, alcance: 6,
     descricao: 'Uma flecha grande e poderosa no alvo.',
     lancar(agora) {
       const alvo = alvoAoAlcance(this.alcance); if (!alvo) return false;
@@ -109,7 +109,7 @@ const MAGIAS = {
     },
   },
   sagitta_mortarium: {
-    nome: 'Sagitta Mortarium', classe: 'arqueiro', level: 15, mana: 70, espera: 10000, forca: 1.4, alcance: 6, raio: 1,
+    nome: 'Sagitta Mortarium', classe: 'arqueiro', level: 15, mana: 70, espera: 10000, forca: 1.3, alcance: 6, raio: 1,
     descricao: 'Flecha morteiro: cai do céu no alvo e explode, acertando tudo em volta (área 3x3).',
     lancar(agora) {
       const alvo = alvoAoAlcance(this.alcance); if (!alvo) return false;
@@ -132,7 +132,7 @@ const MAGIAS = {
     },
   },
   pluvia_sagittarum: {
-    nome: 'Pluvia Sagittarum', classe: 'arqueiro', level: 25, mana: 110, espera: 16000, forca: 1.5, alcance: 6, raio: 2,
+    nome: 'Pluvia Sagittarum', classe: 'arqueiro', level: 25, mana: 110, espera: 16000, forca: 1.4, alcance: 6, raio: 2,
     descricao: 'Chuva de flechas em volta do alvo (área 5x5).',
     lancar(agora) {
       const alvo = alvoAoAlcance(this.alcance); if (!alvo) return false;
@@ -157,7 +157,7 @@ const MAGIAS = {
   // ---------- Mago (elementalista) ----------
   // elemento: o dano é multiplicado pela fraqueza/resistência do monstro (FRAQUEZAS, monstros.js)
   flatus_venti: {
-    nome: 'Flatus Venti', classe: 'mago', level: 5, mana: 15, espera: 2000, forca: 1.25, alcance: 5, elemento: 'vento',
+    nome: 'Flatus Venti', classe: 'mago', level: 5, mana: 15, espera: 2000, forca: 1.1, alcance: 5, elemento: 'vento',
     descricao: 'Rajada de vento: duas lâminas de ar cortam o alvo.',
     lancar(agora) {
       const alvo = alvoAoAlcance(this.alcance); if (!alvo) return false;
@@ -170,7 +170,7 @@ const MAGIAS = {
     },
   },
   aqua_triplex: {
-    nome: 'Aqua Triplex', classe: 'mago', level: 10, mana: 40, espera: 6000, forca: 0.75, alcance: 5, elemento: 'gelo',
+    nome: 'Aqua Triplex', classe: 'mago', level: 10, mana: 40, espera: 6000, forca: 1.0, alcance: 5, elemento: 'gelo',
     descricao: 'Rajada de 3 bolas d\'água geladas no alvo.',
     lancar(agora) {
       const alvo = alvoAoAlcance(this.alcance); if (!alvo) return false;
@@ -183,7 +183,7 @@ const MAGIAS = {
     },
   },
   turbo_venti: {
-    nome: 'Turbo Venti', classe: 'mago', level: 15, mana: 70, espera: 10000, forca: 1.3, alcance: 5, raio: 1, elemento: 'vento',
+    nome: 'Turbo Venti', classe: 'mago', level: 15, mana: 70, espera: 10000, forca: 1.25, alcance: 5, raio: 1, elemento: 'vento',
     descricao: 'Tornado de vento no alvo, acertando tudo em volta (área 3x3).',
     lancar(agora) {
       const alvo = alvoAoAlcance(this.alcance); if (!alvo) return false;
@@ -205,7 +205,7 @@ const MAGIAS = {
     },
   },
   fulmen_pluvia: {
-    nome: 'Fulmen Pluvia', classe: 'mago', level: 25, mana: 120, espera: 16000, forca: 1.6, alcance: 5, raio: 2, elemento: 'raio',
+    nome: 'Fulmen Pluvia', classe: 'mago', level: 25, mana: 120, espera: 16000, forca: 1.5, alcance: 5, raio: 2, elemento: 'raio',
     descricao: 'Chuva de raios em volta do alvo (área 5x5).',
     lancar(agora) {
       const alvo = alvoAoAlcance(this.alcance); if (!alvo) return false;
