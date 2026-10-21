@@ -123,7 +123,7 @@ function entrarNoJogo(nome, classe) {
 
 function mostrarCreditos() {
   abrirModal('Créditos',
-    'Mythoria — feito por você, com ajuda do Claude. ' +
+    'Mythoria —' +
     'Mapa, personagens e monstros: Pipoya (pipoya.itch.io). ' +
     'Ícones dos itens: Matt Firth (shikashipx) — Shikashi\'s Fantasy Icons Pack, CC BY 4.0, baseado em game-icons.net (CC BY 3.0). ' +
     'Monstros do pântano e da montanha: Frakassets (frakassets.itch.io), CC BY 4.0. ' +
