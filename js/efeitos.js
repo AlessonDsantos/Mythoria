@@ -55,6 +55,7 @@ const EFEITOS = {
   dissonancia: { img: 'fx_dissonancia', quadro: 64, quadros: 10, duracao: 750, escala: 2.5 }, // Dissonantia e passiva do bardo (5x5)
   espada_voo:     { img: 'fx_espada_voo',     quadro: 64, quadros: 6, duracao: 300, escala: 0.8 },
   espada_impacto: { img: 'fx_espada_impacto', quadro: 64, quadros: 8, duracao: 400, escala: 1 },
+  chuva_espadas: { img: 'fx_chuva_espadas', quadro: 96, quadros: 16, duracao: 1100, escala: 1, base: true },
 };
 
 const efeitosAtivos = [];
