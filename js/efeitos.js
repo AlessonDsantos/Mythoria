@@ -53,7 +53,8 @@ const EFEITOS = {
   nota_debuff: { img: 'fx_nota_debuff', quadro: 32, quadros: 8, duracao: 800, escala: 1 },    // em cima do monstro enfraquecido
   nota_buff:   { img: 'fx_nota_buff',   quadro: 32, quadros: 8, duracao: 900, escala: 1.3 },  // Cantus Vitae
   dissonancia: { img: 'fx_dissonancia', quadro: 64, quadros: 10, duracao: 750, escala: 2.5 }, // Dissonantia e passiva do bardo (5x5)
-  espada_voadora: { img: 'fx_espada_voadora', quadro: 64, quadros: 14, duracao: 700, escala: 1 },
+  espada_voo:     { img: 'fx_espada_voo',     quadro: 64, quadros: 6, duracao: 300, escala: 0.8 },
+  espada_impacto: { img: 'fx_espada_impacto', quadro: 64, quadros: 8, duracao: 400, escala: 1 },
 };
 
 const efeitosAtivos = [];
