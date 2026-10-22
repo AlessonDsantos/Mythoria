@@ -160,6 +160,7 @@ function desenharOutroJogador(o, sx, sy, agora) {
 // ---------- Chat ----------
 
 function configurarChat() {
+  configurarAbasLog();
   const form = document.getElementById('form-chat');
   if (!form || form.dataset.pronto) return;
   form.dataset.pronto = '1';
@@ -171,7 +172,8 @@ function configurarChat() {
     campo.blur();
     if (!texto) return;
     if (!online.ativo) { mostrarMensagem('Entre com a conta Google para conversar com outros jogadores.'); return; }
-    online.rtdb.ref('chat').push({ uid: nuvem.usuario.uid, nome: jogador.nome, texto, t: firebase.database.ServerValue.TIMESTAMP })
+    mostrarAbaLog('chat');
+    online.rtdb.ref('chat').push({ uid: nuvem.usuario.uid, nome: jogador.nome, texto, x: jogador.x, y: jogador.y, t: firebase.database.ServerValue.TIMESTAMP })
       .catch(() => mostrarMensagem('Não deu pra enviar a mensagem.'));
   });
   campo.addEventListener('keydown', (e) => { if (e.key === 'Escape') campo.blur(); });
@@ -183,12 +185,51 @@ function configurarChat() {
   });
 }
 
+// Chat Local (como no Tibia): só aparece o que foi dito por quem estava na sua tela
+const RAIO_CHAT = { x: 8, y: 6 };
 function receberMensagem(m) {
   if (!m || !m.texto) return;
+  const meu = nuvem.usuario && m.uid === nuvem.usuario.uid;
+  if (!meu && typeof m.x === 'number' && (Math.abs(m.x - jogador.x) > RAIO_CHAT.x || Math.abs(m.y - jogador.y) > RAIO_CHAT.y)) return;
   const texto = String(m.texto).slice(0, ONLINE.TAMANHO_FALA);
-  registrar(m.nome + ': ' + texto, 'chat');
+  registrarChat(m.nome, texto, meu);
   // mensagem nova (não do histórico): aparece em cima da cabeça
   if (m.t && agoraServidor() - m.t < 10000) online.falas[m.uid] = { texto, ate: performance.now() + ONLINE.TEMPO_FALA };
+}
+
+// ---------- Abas embaixo do jogo: Server Log (mensagens do jogo) e Local (conversa) ----------
+
+function registrarChat(nome, texto, meu) {
+  const lista = document.getElementById('log-chat');
+  if (!lista) return;
+  const li = document.createElement('li');
+  const b = document.createElement('b');
+  b.textContent = nome + ': ';
+  b.className = meu ? 'chat-eu' : 'chat-outro';
+  li.appendChild(b);
+  li.appendChild(document.createTextNode(texto));
+  lista.prepend(li);
+  while (lista.children.length > 50) lista.lastChild.remove();
+  const aba = document.querySelector('.aba-log[data-log="chat"]');
+  if (aba && !aba.classList.contains('ativa')) aba.classList.add('novidade');
+}
+
+function mostrarAbaLog(qual) {
+  document.querySelectorAll('.aba-log').forEach(b => {
+    const ativa = b.dataset.log === qual;
+    b.classList.toggle('ativa', ativa);
+    if (ativa) b.classList.remove('novidade');
+  });
+  document.getElementById('log').classList.toggle('escondido', qual !== 'log');
+  document.getElementById('log-chat').classList.toggle('escondido', qual !== 'chat');
+}
+
+function configurarAbasLog() {
+  document.querySelectorAll('.aba-log').forEach(b => {
+    if (b.dataset.pronto) return;
+    b.dataset.pronto = '1';
+    b.addEventListener('click', () => mostrarAbaLog(b.dataset.log));
+  });
 }
 
 // Falas em cima da cabeça (a minha e a dos outros), desenhadas por cima de tudo
