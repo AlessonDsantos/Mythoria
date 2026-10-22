@@ -1,5 +1,5 @@
 // =====================================================
-// barra.js — Barra de ação (teclas 1 a 8)
+// barra.js — Barra de ação (teclas 1 a 9)
 //
 // Cada espaço guarda uma REFERÊNCIA, não o item em si:
 //   { tipo: 'item', id: 'pocao' }     → usa a primeira poção da mochila
@@ -7,6 +7,19 @@
 // =====================================================
 
 const barraAcao = new Array(CONFIG.ESPACOS_BARRA).fill(null);
+
+// Barra padrão: as magias da classe na ordem (curas primeiro, depois por level),
+// e nos dois últimos espaços a poção de vida e a de mana.
+// As magias que ainda não liberaram ficam lá, apagadas, esperando o level.
+const VERSAO_BARRA = 2; // personagens salvos com barra mais antiga recebem a padrão uma vez
+function montarBarraPadrao() {
+  barraAcao.fill(null);
+  const ids = magiasDaClasse().sort((a, b) => MAGIAS[a].level - MAGIAS[b].level);
+  const vagas = CONFIG.ESPACOS_BARRA - 2;
+  ids.slice(0, vagas).forEach((id, i) => { barraAcao[i] = { tipo: 'magia', id }; });
+  barraAcao[CONFIG.ESPACOS_BARRA - 2] = { tipo: 'item', id: 'pocao' };
+  barraAcao[CONFIG.ESPACOS_BARRA - 1] = { tipo: 'item', id: 'pocao_mana' };
+}
 
 function usarBarra(indice, agora) {
   const atalho = barraAcao[indice];
