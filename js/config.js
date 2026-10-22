@@ -38,7 +38,7 @@ const CONFIG = {
   INTERVALO_USO: 1000,    // tempo mínimo entre usar comida/poção
   ALCANCE_NPC: 2,         // de quantos quadrados dá pra negociar com um NPC
   OURO_INICIAL: 50,
-  ESPACOS_BARRA: 8,       // espaços da barra de ação (teclas 1 a 8)
+  ESPACOS_BARRA: 9,       // espaços da barra de ação (teclas 1 a 9)
 
   // ---------- Baú (Guardião do Baú) ----------
   BAU_INICIAL: 30,        // espaços que todo mundo já tem
