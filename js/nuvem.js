@@ -18,6 +18,7 @@ const FIREBASE_CONFIG = {
   apiKey: 'AIzaSyBfTCWlFPjOcsblpocL8BkAg0XststdTLM',
   authDomain: 'meu-rpg-42daa.firebaseapp.com',
   projectId: 'meu-rpg-42daa',
+  databaseURL: 'https://meu-rpg-42daa-default-rtdb.firebaseio.com', // Realtime Database (jogadores online e chat)
   storageBucket: 'meu-rpg-42daa.firebasestorage.app',
   messagingSenderId: '1081066578487',
   appId: '1:1081066578487:web:5bd67833d614501b6315b2',
