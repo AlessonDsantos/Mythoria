@@ -88,10 +88,7 @@ function novoPersonagem(nome, classe) {
   darKitInicial();
   guardarNaMochila('queijo', 3);
   jogador.saciadoAte = performance.now() + CONFIG.FOME_INICIAL_MIN * 60000;
-  barraAcao[0] = { tipo: 'magia', id: 'vita_lux' };
-  barraAcao[1] = { tipo: 'item', id: 'pocao' };
-  barraAcao[2] = { tipo: 'item', id: 'pocao_mana' };
-  barraAcao[3] = { tipo: 'item', id: 'queijo' };
+  montarBarraPadrao();
   posicionarJogador(jogador.templo.x, jogador.templo.y);
 }
 
