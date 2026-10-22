@@ -485,7 +485,8 @@ function desenharProjeteis(agora) {
       // projétil animado (gelo, orbe, fogo, flecha da chuva): aponta para onde vai
       const ef = EFEITOS[p.tipo];
       const quadro = Math.floor((agora - p.inicio) / 70) % ef.quadros;
-      desenharQuadroEfeito(ef, quadro, x, y, ef.semGiro ? 0 : angulo);
+      if (ef.espelhar && Math.abs(angulo) > Math.PI / 2) desenharQuadroEfeito(ef, quadro, x, y, angulo - Math.PI, true); // indo pra esquerda
+      else desenharQuadroEfeito(ef, quadro, x, y, ef.semGiro ? 0 : angulo);
       continue;
     }
     if (p.tipo === 'magia') {
