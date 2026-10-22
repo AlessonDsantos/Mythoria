@@ -42,6 +42,7 @@ function iniciarJogo(nome, classe) {
   iniciarSom(); // entrar no jogo foi um clique: o navegador deixa tocar
   configurarArrastar();
   configurarSave();
+  iniciarOnline(); // outros jogadores e chat (online.js)
 
   registrar(classe
     ? 'Bem-vindo a Mythoria, ' + jogador.nome + '! Você está no templo. Visite as lojas e saia pelos portões para caçar.'
@@ -61,6 +62,7 @@ function iniciarJogo(nome, classe) {
     atualizarPassivas(agora);
     atualizarSom(agora);
     atualizarSave(agora);
+    atualizarOnline(agora);
   }
 
   // ...e a tela é desenhada. requestAnimationFrame chama ~60x por segundo,
