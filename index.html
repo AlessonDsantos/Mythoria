@@ -95,7 +95,7 @@
             <b>Modo de ataque:</b> Seguir/Parado na Battle List (alvo fora da tela é perdido) ·
           <b>Tasks:</b> Capitão Aldric, do lado da fonte ·
           <b>Explicações:</b> passe o mouse em magias, itens e passivas (no celular, segure o dedo em cima) ·
-          <b>Lojas:</b> clique no NPC (nome azul) · <b>Chat:</b> Enter · <b>Grupo:</b> clique no nome de um jogador em "Online" pra convidar (precisa entrar com Google)
+          <b>Lojas:</b> clique no NPC (nome azul) · <b>Chat Local:</b> Enter (só quem está na sua tela ouve) · <b>Grupo:</b> clique no nome de um jogador em "Online" pra convidar (precisa entrar com Google)
           </p>
           </div>
 
@@ -156,8 +156,12 @@
         <div id="faixa-baixo" class="faixa-baixo"></div>
 
         <div id="abaixo" class="abaixo">
-          <div class="titulo-log">Server Log</div>
+          <div class="abas-log">
+            <button type="button" class="aba-log ativa" data-log="log">Server Log</button>
+            <button type="button" class="aba-log" data-log="chat">Chat Local</button>
+          </div>
           <ul id="log" class="log"></ul>
+          <ul id="log-chat" class="log escondido"></ul>
           <div id="online-lista" class="online-lista"></div>
           <div id="grupo-info" class="grupo-info escondido"></div>
           <form id="form-chat" class="form-chat" autocomplete="off">
