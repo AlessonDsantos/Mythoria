@@ -206,7 +206,7 @@ function atacarMonstro(m, agora) {
   const critico = rolarCritico(agora, true);
   if (critico) { dano = Math.round(dano * DANO_CRITICO); mostrarCritico(m, agora, atraso); }
 
-  m.vida -= dano;
+  ferirMonstro(m, dano);
   m.ultimoDano = agora + atraso;
   adicionarTexto(m.x, m.y, critico ? dano + '!' : String(dano), critico ? '#ffd23f' : '#ff4d4d', agora + atraso);
   aplicarPassivaNoDano(dano, agora, atraso); // roubo de vida (espada) / mana (cajado)
@@ -216,7 +216,7 @@ function atacarMonstro(m, agora) {
   // Fantoche de treino: leva o dano, mas nunca morre
   if (TIPOS_MONSTRO[m.tipo].fantoche) { m.vida = m.vidaMax; return; }
 
-  if (m.vida <= 0) matarMonstro(m, agora);
+  if (m.vida <= 0 && !ehMembroDoGrupo()) matarMonstro(m, agora); // em grupo, quem decide a morte é o líder
 }
 
 // Gasta munição/arma arremessada.
@@ -272,18 +272,21 @@ function matarMonstro(m, agora) {
   m.vida = 0;
   m.morto = true;
   m.morreuEm = agora;
-  limparAlvo();
+  if (jogador.alvo === m) limparAlvo();
   respawnsPendentes.push({ quando: agora + tempoRespawn(m), casa: m.casa });
 
   // O loot fica dentro do corpo; o jogador precisa abrir e pegar
   m.loot = sortearLoot(m.tipo);
   for (const id in (m.armasCaidas || {})) m.loot.push({ id, qtd: m.armasCaidas[id] }); // lanças/shurikens que caíram nele
   const descricao = m.loot.length ? m.loot.map(e => nomeComQuantidade(e.id, e.qtd)).join(', ') : 'nada';
-  registrar(tipo.nome + (tipo.feminino ? ' morta' : ' morto') + ' (+' + tipo.xp + ' XP). Loot: ' + descricao + '.', 'loot');
+  // Em grupo, a XP é dividida (com bônus) entre quem participou — grupo.js decide
+  const minhaXp = grupoAtivoComMembros() ? dividirXpDoGrupo(m, tipo, agora) : tipo.xp;
+  if (minhaXp === null) return; // eu não participei dessa morte (só os amigos)
+  registrar(tipo.nome + (tipo.feminino ? ' morta' : ' morto') + ' (+' + minhaXp + ' XP). Loot: ' + descricao + '.', 'loot');
   contarTask(m.tipo); // conta pra task do Capitão (aparece no Server Log logo depois)
-  adicionarTexto(jogador.x, jogador.y, '+' + tipo.xp + ' XP', '#ffffff', agora);
+  adicionarTexto(jogador.x, jogador.y, '+' + minhaXp + ' XP', '#ffffff', agora);
 
-  ganharXp(tipo.xp, agora);
+  ganharXp(minhaXp, agora);
 }
 
 function ganharXp(quantidade, agora) {
