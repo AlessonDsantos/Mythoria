@@ -13,7 +13,7 @@
 //   Clavas:   esquiva — desvia de todos os ataques
 //   Arcos e arremesso: precisão — Distance +40%
 //   Cajados:  fonte de mana — o dano do cajado vira mana (100%)
-//   Instrumentos: ressonância — o ataque pula pra até 2 monstros perto do alvo, com o mesmo dano
+//   Instrumentos: ressonância — o ataque ricocheteia de monstro em monstro (até 4, pulos de até 3 quadrados), mesmo dano
 // Enquanto a passiva da arma está ativa, aparece uma aura colorida no personagem.
 // =====================================================
 
@@ -33,8 +33,8 @@ const PASSIVAS_ARMA = {
                descricao: 'Distance +40% (mais dano e mais acerto)' },
   cajado:    { nome: 'Fonte de mana',  chance: 0.05, duracao: 6000, filtro: 'hue-rotate(150deg) saturate(1.6)',               // roxo
                descricao: 'o dano do cajado vira mana (100%)' },
-  instrumento: { nome: 'Ressonância', chance: 0.05, duracao: 6000, pulos: 2, raio: 2, parte: 1, filtro: 'hue-rotate(200deg) saturate(1.8)', // rosa
-               descricao: 'cada ataque pula pra até 2 monstros perto do alvo, com o mesmo dano' },
+  instrumento: { nome: 'Ressonância', chance: 0.05, duracao: 6000, pulos: 4, raio: 3, parte: 1, filtro: 'hue-rotate(200deg) saturate(1.8)', // rosa
+               descricao: 'cada ataque ricocheteia de monstro em monstro (até 4, pulando até 3 quadrados), com o mesmo dano' },
 };
 
 // Texto das passivas de classe (aparecem no painel de magias)
@@ -135,19 +135,26 @@ function aplicarPassivaNoDano(dano, agora, atraso) {
   }
 }
 
-// Ressonância (instrumentos): a nota pula do alvo pra até 2 monstros perto dele, com o mesmo dano
+// Ressonância (instrumentos): o tiro ricocheteia de monstro em monstro — cada pulo vai pro
+// monstro mais perto (até 3 quadrados) que ainda não foi atingido, até 4 pulos, com o mesmo dano.
 function ressonancia(alvo, dano, agora, atraso) {
   const p = PASSIVAS_ARMA.instrumento;
   const parte = Math.max(1, Math.round(dano * p.parte));
-  const outros = monstrosNaArea(alvo, p.raio)
-    .filter(m => m !== alvo && !TIPOS_MONSTRO[m.tipo].fantoche)
-    .sort((a, b) => distancia(a, alvo) - distancia(b, alvo))
-    .slice(0, p.pulos);
-  outros.forEach((m, k) => {
-    const voo = 60 + distancia(m, alvo) * 50, quando = atraso + 60 + k * 90;
-    criarProjetilEfeito(armaAtual().tiro || 'nota', alvo, m, agora, voo, quando);
-    danificarComMagia(m, parte, agora, quando + voo, null, true);
-  });
+  const tiro = armaAtual().tiro || 'nota';
+  const atingidos = new Set([alvo]);
+  let de = alvo, quando = atraso;
+  for (let k = 0; k < p.pulos; k++) {
+    const prox = monstrosNaArea(de, p.raio)
+      .filter(m => !atingidos.has(m) && !TIPOS_MONSTRO[m.tipo].fantoche)
+      .sort((a, b) => distancia(a, de) - distancia(b, de))[0];
+    if (!prox) break;
+    const voo = 60 + distancia(prox, de) * 50;
+    criarProjetilEfeito(tiro, de, prox, agora, voo, quando + 40);
+    quando += 40 + voo;
+    danificarComMagia(prox, parte, agora, quando, null, true);
+    atingidos.add(prox);
+    de = prox;
+  }
 }
 
 // Monstro acertou o jogador: devolve o dano depois das passivas, ou null se nada passou
