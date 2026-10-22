@@ -82,10 +82,10 @@ const TIPOS_MONSTRO = {
 
   // ---------- Campos do Leste (level 1–5) ----------
   lobo_branco: { nome: 'Lobo branco', sprite: 'lobo_branco',
-    vida: 40, ataqueMax: 16, defesa: 1, xp: 9, ouro: [1, 4], passo: 420, visao: 5,
+    vida: 40, ataqueMax: 12, defesa: 1, xp: 18, ouro: [2, 4], passo: 420, visao: 5,
     loot: [{ item: 'presa_lobo', chance: 0.08, qtd: [1, 1] }] },
   lobo_cinza: { nome: 'Lobo cinzento', sprite: 'lobo_cinza',
-    vida: 50, ataqueMax: 22, defesa: 2, xp: 17, ouro: [2, 8], passo: 360, visao: 6,
+    vida: 50, ataqueMax: 16, defesa: 2, xp: 32, ouro: [3, 8], passo: 360, visao: 6,
     loot: [{ item: 'presa_lobo', chance: 0.12, qtd: [1, 1] }, { item: 'pele_lobo', chance: 0.08, qtd: [1, 1] }] },
 
   // ---------- Pântano (level 5–10) ----------
