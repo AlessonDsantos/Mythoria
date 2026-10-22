@@ -50,7 +50,7 @@ const CONFIG = {
   CHAVE_SAVE: 'mythoria.personagens', // "gaveta" no localStorage com todos os personagens
   CHAVE_INTERFACE: 'mythoria.interface', // painéis minimizados etc.
   INTERVALO_SAVE: 10000,              // salva sozinho a cada 10 segundos
-  VERSAO: 'v0.18',
+  VERSAO: 'v0.19',
 };
 
 // Tipos de terreno.
