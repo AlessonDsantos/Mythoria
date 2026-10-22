@@ -146,7 +146,7 @@ const ITENS = {
   alaude:  { nome: 'Alaúde', tipo: 'arma', categoria: 'instrumento', classe: 'bardo', skill: 'magia', ataque: 15, acerto: 0.92, alcance: 4,
              tiro: 'nota_roxa', tiros: 3, preco: 300, valor: 90 },
   violino: { nome: 'Violino', tipo: 'arma', categoria: 'instrumento', classe: 'bardo', skill: 'magia', ataque: 20, acerto: 0.92, alcance: 4,
-             tiro: 'bumerangue', volta: true, preco: 700, valor: 230 },
+             tiro: 'cordas', preco: 700, valor: 230 },
 
   // v0.15 — status no chute (ajuste à vontade)
   machado_runico: { nome: 'Machado rúnico', tipo: 'arma', categoria: 'machado', skill: 'melee', ataque: 28, acerto: 0.76, alcance: 1, valor: 900 },
