@@ -80,6 +80,7 @@ function salvarJogo() {
     equip: jogador.equip,
     mochila: mochila.espacos,
     barra: barraAcao,
+    barraVersao: VERSAO_BARRA,
     explorado: exploradoParaTexto(),
     mapa: VERSAO_MAPA,
     fomeMs: Math.max(0, jogador.saciadoAte - performance.now()), // quanto tempo ainda sem fome
@@ -123,6 +124,7 @@ function carregarPersonagem(nome) {
     const valido = a && (a.tipo === 'magia' ? MAGIAS[a.id] : ITENS[a.id]);
     barraAcao[i] = valido ? { tipo: a.tipo, id: a.id } : null;
   }
+  if (dados.barraVersao !== VERSAO_BARRA) montarBarraPadrao(); // v0.18: magias em ordem + poções no 8 e 9
 
   // Fome: guarda quanto tempo faltava (o relógio do navegador recomeça a cada página)
   // (personagem de versão antiga, sem esse dado, começa com alguns minutos de comida)
