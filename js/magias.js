@@ -29,12 +29,14 @@ const MAGIAS = {
 
   // ---------- Guerreiro ----------
   ictus_validus: {
-    nome: 'Ictus Validus', classe: 'guerreiro', level: 5, mana: 15, espera: 2000, forca: 1.2, alcance: 1,
-    descricao: 'Um golpe muito forte no alvo colado em você.',
+    nome: 'Ictus Validus', classe: 'guerreiro', level: 5, mana: 15, espera: 3000, forca: 1.3, alcance: 5,
+    descricao: 'Arremessa uma espada no alvo, até 5 quadrados.',
   lancar(agora) {
-      const alvo = alvoAoAlcance(1); if (!alvo) return false;
-      criarEfeito('espada_voadora', alvo.x, alvo.y, agora);
-      danificarComMagia(alvo, danoDeMagia('melee', this.forca), agora, 300);
+      const alvo = alvoAoAlcance(this.alcance); if (!alvo) return false;
+      const voo = 100 + distancia(alvo, jogador) * 60;          // mais longe = demora mais pra chegar
+      criarProjetilEfeito('espada_voo', jogador, alvo, agora, voo);
+      criarEfeito('espada_impacto', alvo.x, alvo.y, agora, voo);
+      danificarComMagia(alvo, danoDeMagia('melee', this.forca), agora, voo);
       return true;
     },
   },
