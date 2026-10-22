@@ -276,6 +276,7 @@ function ehLivre(x, y) {
   if (!ehPassavel(x, y)) return false;
   if (monstroEm(x, y) || npcEm(x, y)) return false;
   if (jogador.x === x && jogador.y === y) return false;
+  if (membroEm(x, y)) return false; // outro jogador do grupo (grupo.js)
   return true;
 }
 
@@ -375,8 +376,15 @@ function passoDoMonstro(m, agora) {
 }
 
 function deixarLento(m, lentidao, ate) {
+  if (ehMembroDoGrupo()) enviarAcaoGrupo({ t: 'lento', id: m.id, l: lentidao, ms: Math.round(ate - performance.now()) });
   m.lentidao = lentidao;
   m.lentoAte = ate;
+}
+
+// Carmen Torpor: sem defesa até "ate"
+function tirarDefesa(m, ate) {
+  if (ehMembroDoGrupo()) enviarAcaoGrupo({ t: 'semdef', id: m.id, ms: Math.round(ate - performance.now()) });
+  m.semDefesaAte = ate;
 }
 
 // Defesa do monstro agora (Carmen Torpor zera)
@@ -387,6 +395,7 @@ function defesaMonstro(m, agora = performance.now()) {
 // Confuso: anda pra lados aleatórios e não ataca. Boss não fica confuso — fica 25% mais lento.
 function confundir(m, agora, duracao) {
   if (TIPOS_MONSTRO[m.tipo].chefe) { deixarLento(m, 0.25, agora + duracao); return false; }
+  if (ehMembroDoGrupo()) enviarAcaoGrupo({ t: 'conf', id: m.id, ms: duracao });
   m.confusoAte = Math.max(m.confusoAte || 0, agora + duracao);
   adicionarTexto(m.x, m.y, 'confuso', '#d6a8ff', agora);
   return true;
@@ -474,11 +483,13 @@ function atualizarMonstros(agora) {
 
     const tipo = TIPOS_MONSTRO[m.tipo];
     if (tipo.fantoche) continue; // fica parado no lugar
-    const dist = distancia(m, jogador);
-    const vendoJogador = jogador.vida > 0 && dist <= tipo.visao && !naZonaSegura(jogador.x, jogador.y);
+    // Alvo: você ou, em grupo, o membro mais perto que ele enxerga (grupo.js)
+    const alvo = alvoDoMonstro(m, tipo);
+    const vendoJogador = !!alvo;
+    const dist = alvo ? distancia(m, alvo) : Infinity;
     const alcance = tipo.alcance || 1;
     // De longe precisa enxergar sem árvore no meio; de perto, basta estar colado
-    const podeAtacar = vendoJogador && dist <= alcance && (dist <= 1 || linhaDeVisao(m, jogador));
+    const podeAtacar = vendoJogador && dist <= alcance && (dist <= 1 || linhaDeVisao(m, alvo));
 
     if (monstroConfuso(m, agora)) {
       // confuso (bardo): anda à toa pra qualquer lado e não ataca
@@ -488,13 +499,14 @@ function atualizarMonstros(agora) {
       }
     } else if (podeAtacar) {
       if (agora >= m.proximoAtaque) {
-        monstroAtaca(m, agora);
+        if (alvo === jogador) monstroAtaca(m, agora);
+        else golpearMembro(m, alvo, agora); // o golpe é calculado no aparelho do membro
         m.proximoAtaque = agora + CONFIG.INTERVALO_ATAQUE;
       }
     } else if (tipo.parado) {
-      if (vendoJogador) virarPara(m, jogador); // de tocaia: só vira pra você e espera
+      if (vendoJogador) virarPara(m, alvo); // de tocaia: só vira pra você e espera
     } else if (!monstroAndando(m, agora)) {
-      if (vendoJogador) perseguir(m, agora);
+      if (vendoJogador) passoEmDirecao(m, alvo, agora);
       else vagar(m, agora);
     }
   }
