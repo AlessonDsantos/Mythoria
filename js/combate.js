@@ -145,7 +145,7 @@ function atualizarAtaqueJogador(agora) {
     return;
   }
 
-  atacarMonstro(alvo, agora);
+  comFx(() => atacarMonstro(alvo, agora)); // em grupo, os outros veem o seu ataque (grupo.js)
   jogador.proximoAtaque = agora + CONFIG.INTERVALO_ATAQUE;
 }
 
@@ -280,7 +280,7 @@ function matarMonstro(m, agora) {
   for (const id in (m.armasCaidas || {})) m.loot.push({ id, qtd: m.armasCaidas[id] }); // lanças/shurikens que caíram nele
   const descricao = m.loot.length ? m.loot.map(e => nomeComQuantidade(e.id, e.qtd)).join(', ') : 'nada';
   // Em grupo, a XP é dividida (com bônus) entre quem participou — grupo.js decide
-  const minhaXp = grupoAtivoComMembros() ? dividirXpDoGrupo(m, tipo, agora) : tipo.xp;
+  const minhaXp = grupoAtivoComMembros() ? dividirXpDoGrupo(m, tipo, agora, descricao) : tipo.xp;
   if (minhaXp === null) return; // eu não participei dessa morte (só os amigos)
   registrar(tipo.nome + (tipo.feminino ? ' morta' : ' morto') + ' (+' + minhaXp + ' XP). Loot: ' + descricao + '.', 'loot');
   contarTask(m.tipo); // conta pra task do Capitão (aparece no Server Log logo depois)
