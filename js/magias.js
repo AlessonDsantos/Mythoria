@@ -260,7 +260,7 @@ const MAGIAS = {
       criarProjetilEfeito('nota', jogador, alvo, agora, voo);
       const lent = TIPOS_MONSTRO[alvo.tipo].chefe ? this.lentidaoChefe : this.lentidao;
       deixarLento(alvo, lent, agora + voo + this.duracao);
-      alvo.semDefesaAte = agora + voo + this.duracao;
+      tirarDefesa(alvo, agora + voo + this.duracao);
       adicionarTexto(alvo.x, alvo.y, 'sem defesa', '#d6a8ff', agora + voo);
       return true;
     },
@@ -342,6 +342,7 @@ function valorCura(magia) {
 
 function curar(quantidade, efeito, agora) {
   if (jogador.vida >= jogador.vidaMax) { mostrarMensagem('Sua vida já está cheia.'); return false; }
+  marcarCuraNoGrupo(); // em grupo, curar também conta como participar (XP)
   const antes = jogador.vida;
   jogador.vida = Math.min(jogador.vidaMax, jogador.vida + quantidade);
   criarEfeito(efeito, jogador.x, jogador.y, agora);
@@ -398,25 +399,29 @@ function danificarComMagia(m, bruto, agora, atraso = 0, elemento = null, semDefe
   dano = Math.max(1, Math.round(dano * mult));
   const critico = rolarCritico(agora, false); // passiva do arqueiro também vale nas magias
   if (critico) { dano = Math.round(dano * DANO_CRITICO); mostrarCritico(m, agora, atraso); }
-  m.vida -= dano;
+  ferirMonstro(m, dano);
   m.ultimoDano = agora + atraso;
   const texto = String(dano) + (mult > 1 || critico ? '!' : '');
   adicionarTexto(m.x, m.y, texto, critico ? '#ffd23f' : elemento ? COR_ELEMENTO[elemento] : '#7ec8ff', agora + atraso);
   if (TIPOS_MONSTRO[m.tipo].fantoche) { m.vida = m.vidaMax; return; }
-  if (m.vida <= 0) matarMonstro(m, agora);
+  if (m.vida <= 0 && !ehMembroDoGrupo()) matarMonstro(m, agora);
 }
 
-// Attractio: cada monstro à vista desliza até um quadrado livre perto do guerreiro
-function puxarMonstros(agora) {
+// Attractio: cada monstro à vista desliza até um quadrado livre perto do guerreiro.
+// centro: quem puxou (em grupo, o líder puxa pra perto do membro que lançou)
+function puxarMonstros(agora, centro = jogador) {
+  if (ehMembroDoGrupo()) { enviarAcaoGrupo({ t: 'puxar', x: jogador.x, y: jogador.y }); return; }
   const vizinhos = [];
   for (let raio = 1; raio <= 2; raio++) {
     for (let dy = -raio; dy <= raio; dy++) {
       for (let dx = -raio; dx <= raio; dx++) {
-        if (Math.max(Math.abs(dx), Math.abs(dy)) === raio) vizinhos.push({ x: jogador.x + dx, y: jogador.y + dy });
+        if (Math.max(Math.abs(dx), Math.abs(dy)) === raio) vizinhos.push({ x: centro.x + dx, y: centro.y + dy });
       }
     }
   }
-  const alvos = criaturasNaTela().filter(m => !TIPOS_MONSTRO[m.tipo].fantoche && distancia(m, jogador) > 1);
+  const meiaL = Math.floor(CONFIG.VISAO_COLUNAS / 2), meiaA = Math.floor(CONFIG.VISAO_LINHAS / 2);
+  const alvos = monstros.filter(m => !m.morto && !TIPOS_MONSTRO[m.tipo].fantoche && distancia(m, centro) > 1 &&
+    Math.abs(m.x - centro.x) <= meiaL && Math.abs(m.y - centro.y) <= meiaA).sort((a, b) => distancia(a, centro) - distancia(b, centro));
   let puxados = 0;
   for (const m of alvos) {
     const lugar = vizinhos.find(p => ehLivre(p.x, p.y) && !naZonaSegura(p.x, p.y));
@@ -428,7 +433,7 @@ function puxarMonstros(agora) {
     criarEfeito('impacto', lugar.x, lugar.y, agora, 200);
     puxados++;
   }
-  if (puxados) registrar('Attractio puxou ' + puxados + (puxados === 1 ? ' monstro.' : ' monstros.'), 'skill');
+  if (puxados && centro === jogador) registrar('Attractio puxou ' + puxados + (puxados === 1 ? ' monstro.' : ' monstros.'), 'skill');
 }
 
 // Fúria do Attractio: +20% de vida máxima (e cura esse tanto) e 15% menos dano
