@@ -246,8 +246,14 @@ function clicarNoCorpo(m, abrir = false) {
 // e escreve uma linha só no log (ouro somado). Se a mochila encher, abre a janela.
 function saquearCorpo(m) {
   corpoPendente = null;
-  const pilha = monstros.filter(c => c.morto && !c.removido && c.x === m.x && c.y === m.y && !corpoVazio(c));
+  let pilha = monstros.filter(c => c.morto && !c.removido && c.x === m.x && c.y === m.y && !corpoVazio(c));
   if (!pilha.length) { mostrarMensagem('Esse corpo está vazio.'); return; }
+  // Em grupo: só quem atacou o monstro pega o loot; o membro pede pro líder (grupo.js)
+  if (noGrupo()) {
+    pilha = pilha.filter(c => podePegarLoot(c, meuId()));
+    if (!pilha.length) { mostrarMensagem('Só quem atacou esse monstro pode pegar o loot.'); return; }
+    if (ehMembroDoGrupo()) { for (const c of pilha) pedirLoot(c, c.loot.map((e, i) => i)); return; }
+  }
   const pegou = {};
   let cheio = null;
   for (const c of pilha) {
@@ -288,6 +294,8 @@ function pegarDoCorpo(indice) {
   if (!m) return;
   const e = m.loot[indice];
   if (!e) return;
+  if (noGrupo() && !podePegarLoot(m, meuId())) { mostrarMensagem('Só quem atacou esse monstro pode pegar o loot.'); return; }
+  if (ehMembroDoGrupo()) { pedirLoot(m, [indice]); return; } // o líder manda o item
 
   const guardou = guardarNaMochila(e.id, e.qtd);
   if (guardou > 0) registrar('Você pegou ' + nomeComQuantidade(e.id, guardou) + '.', 'loot');
@@ -300,6 +308,7 @@ function pegarDoCorpo(indice) {
 
 function pegarTudo() {
   if (!corpoAberto) return;
+  if (ehMembroDoGrupo()) { pedirLoot(corpoAberto, corpoAberto.loot.map((e, i) => i)); return; }
   corpoAberto.loot.forEach((e, i) => { if (e) pegarDoCorpo(i); });
 }
 
