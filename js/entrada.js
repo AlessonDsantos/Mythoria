@@ -23,7 +23,7 @@ function configurarEntrada(canvas) {
     // Janela de confirmação aberta: Esc fecha, o resto fica parado
     if (modalAberto()) { if (e.key === 'Escape') fecharModal(); return; }
 
-    // Barra de ação: teclas 1 a 8
+    // Barra de ação: teclas 1 a 9
     const numero = Number(e.key);
     if (numero >= 1 && numero <= CONFIG.ESPACOS_BARRA) { usarBarra(numero - 1, performance.now()); return; }
 
