@@ -86,7 +86,7 @@ function pedirParaSair() {
 //   "largo": lateral com 2 colunas (mapa/battle/status | equipamento/magias/mochila), log embaixo do jogo
 //   "alto":  (janela mais estreita e alta) 1 coluna lateral (equipamento/magias/mochila/log)
 //            e mapa, status e battle list numa faixa embaixo do jogo
-const ALTURA_MINIMA_LOG = 140; // log + lista de online + campo do chat
+const ALTURA_MINIMA_LOG = 160; // log + online + grupo + campo do chat
 const LARGURA_COLUNA = 258;
 const ALTURA_FAIXA = 236;  // faixa de baixo no modo alto (mapa/status/battle list)
 let modoTela = null;
