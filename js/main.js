@@ -52,7 +52,8 @@ function iniciarJogo(nome, classe) {
   function atualizarMundo(agora) {
     atualizarJogador(agora);
     atualizarAtaqueJogador(agora);
-    atualizarMonstros(agora);
+    if (!ehMembroDoGrupo()) atualizarMonstros(agora); // membro de grupo: os monstros vêm do líder
+    atualizarGrupo(agora);
     atualizarRegeneracao(agora);
     atualizarCorpos(agora);
     atualizarLoja(agora);
