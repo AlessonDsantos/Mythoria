@@ -59,8 +59,8 @@ function iniciarJogo(nome, classe) {
     atualizarLoja(agora);
     atualizarBau();
     atualizarTasks();
-    atualizarMagias(agora);
-    atualizarPassivas(agora);
+    comFx(() => atualizarMagias(agora));   // (comFx: em grupo, os outros veem os efeitos)
+    comFx(() => atualizarPassivas(agora));
     atualizarSom(agora);
     atualizarSave(agora);
     atualizarOnline(agora);
