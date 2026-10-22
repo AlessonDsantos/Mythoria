@@ -321,13 +321,13 @@ function lancarMagia(id, agora) {
   if (jogador.mana < m.mana) { mostrarMensagem('Mana insuficiente (' + m.mana + ').'); return; }
 
   // "lancar" devolve false quando não deu (sem alvo, longe demais...): aí não gasta mana
-  if (m.lancar(agora) === false) return;
+  if (comFx(() => m.lancar(agora)) === false) return; // em grupo, os outros veem a magia (grupo.js)
   jogador.mana -= m.mana;
   treinarMagia(m.mana);
   // Durante a fúria do Attractio, as outras magias voltam em 2 segundos
   const espera = jogador.furia && id !== 'attractio' ? Math.min(m.espera, 2000) : m.espera;
   jogador.esperaMagias[id] = agora + espera;
-  adicionarTexto(jogador.x, jogador.y, m.nome, '#cfe3ff', agora);
+  comFx(() => adicionarTexto(jogador.x, jogador.y, m.nome, '#cfe3ff', agora));
 }
 
 // ---------- Ajudantes das magias ----------
