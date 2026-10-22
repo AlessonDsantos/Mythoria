@@ -46,7 +46,9 @@ const EFEITOS = {
   nota:        { img: 'fx_nota',        quadro: 32, quadros: 8, duracao: 400, escala: 1, semGiro: true },   // magias do bardo
   nota_grande: { img: 'fx_nota',        quadro: 32, quadros: 8, duracao: 400, escala: 1.6, semGiro: true }, // tiro da flauta
   nota_roxa:   { img: 'fx_nota_roxa',   quadro: 32, quadros: 8, duracao: 400, escala: 1.1, semGiro: true }, // tiro do alaúde (3 em fila)
-  bumerangue:  { img: 'fx_bumerangue',  quadro: 32, quadros: 8, duracao: 400, escala: 1.3, semGiro: true }, // tiro do violino (vai e volta)
+  bumerangue:  { img: 'fx_bumerangue',  quadro: 32, quadros: 8, duracao: 400, escala: 1.3, semGiro: true }, // (não usado: era o tiro do violino)
+  // espelhar: aponta pra onde vai, mas pra esquerda é espelhado (a nota não fica de cabeça pra baixo)
+  cordas:      { img: 'fx_cordas',      quadro: 32, quadros: 8, duracao: 400, escala: 1.3, espelhar: true }, // tiro do violino
   onda_som:    { img: 'fx_onda_som',    quadro: 32, quadros: 8, duracao: 500, escala: 3.2 },  // Unda Sonora
   nota_debuff: { img: 'fx_nota_debuff', quadro: 32, quadros: 8, duracao: 800, escala: 1 },    // em cima do monstro enfraquecido
   nota_buff:   { img: 'fx_nota_buff',   quadro: 32, quadros: 8, duracao: 900, escala: 1.3 },  // Cantus Vitae
@@ -68,13 +70,14 @@ function criarProjetilEfeito(nome, de, para, agora, duracao, atraso = 0) {
 }
 
 // Desenha um quadro de um efeito com o centro em (cx, cy) na tela
-function desenharQuadroEfeito(ef, indice, cx, cy, angulo = 0) {
+function desenharQuadroEfeito(ef, indice, cx, cy, angulo = 0, espelho = false) {
   const im = img[ef.img];
   if (!im) return;
   const tam = ef.quadro * ef.escala;
   ctx.save();
   ctx.translate(Math.round(cx), Math.round(cy));
   if (angulo) ctx.rotate(angulo);
+  if (espelho) ctx.scale(-1, 1);
   ctx.drawImage(im, indice * ef.quadro, 0, ef.quadro, ef.quadro, -tam / 2, ef.base ? -tam : -tam / 2, tam, tam);
   ctx.restore();
 }
