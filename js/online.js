@@ -69,6 +69,7 @@ function iniciarOnline() {
   online.rtdb.ref('chat').orderByChild('t').startAt(agoraServidor() - ONLINE.HISTORICO_CHAT).limitToLast(30)
     .on('child_added', s => receberMensagem(s.val()));
 
+  configurarGrupo(); // grupo / party (grupo.js)
   window.addEventListener('pagehide', sairOnline);
   registrar('Você está online. Outros jogadores conectados com Google aparecem no mapa.', 'info');
   mostrarListaOnline();
@@ -82,7 +83,8 @@ function sairOnline() {
 // ---------- Enviar a minha posição ----------
 
 function estadoAtual() {
-  return { nome: jogador.nome, classe: jogador.classe, level: jogador.level, x: jogador.x, y: jogador.y, dir: jogador.direcao };
+  return { nome: jogador.nome, classe: jogador.classe, level: jogador.level, x: jogador.x, y: jogador.y, dir: jogador.direcao,
+    vida: Math.max(0, Math.round(jogador.vida)), vidaMax: jogador.vidaMax };
 }
 
 function atualizarOnline(agora) {
@@ -104,7 +106,7 @@ function receberJogador(uid, dados) {
   if (!dados || uid === nuvem.usuario.uid) return;
   const agora = performance.now();
   const antigo = online.outros[uid];
-  const o = Object.assign({}, dados);
+  const o = Object.assign({}, dados, { uid });
   if (antigo) {
     const p = posicaoVisualOutro(antigo, agora);
     const andou = antigo.x !== o.x || antigo.y !== o.y;
@@ -147,7 +149,12 @@ function desenharOutroJogador(o, sx, sy, agora) {
   const andando = agora - o.inicio < ONLINE.DURACAO_PASSO;
   desenharSombra(sx + T / 2, sy + T - 2, 9);
   if (imagem) desenharPersonagem(imagem, o.dir || 'baixo', quadroAndando(andando, agora), sx, sy);
-  desenharNome(o.nome + ' (' + o.level + ')', '#7ec8ff', sx + T / 2, sy - 7);
+  if (ehDoMeuGrupo(o.uid)) {
+    // do meu grupo: nome verde e barra de vida
+    desenharNomeEVida(o.nome + ' (' + o.level + ')', '#7dffb0', o.vida || 0, o.vidaMax || 1, sx + T / 2, sy - 1);
+  } else {
+    desenharNome(o.nome + ' (' + o.level + ')', '#7ec8ff', sx + T / 2, sy - 7);
+  }
 }
 
 // ---------- Chat ----------
@@ -230,7 +237,21 @@ function mostrarListaOnline() {
     el.textContent = nuvem.usuario ? 'Online indisponível agora.' : 'Entre com a conta Google para ver outros jogadores.';
     return;
   }
-  const nomes = outrosAtivos().map(([, o]) => o.nome + ' (' + o.level + ')');
-  el.textContent = '🟢 Online: ' + (nomes.length ? nomes.join(' · ') : 'só você por enquanto');
+  // cada nome é um botão: clique pra convidar pro grupo
+  el.innerHTML = '';
+  const t = document.createElement('span');
+  t.textContent = '🟢 Online: ';
+  el.appendChild(t);
+  const lista = outrosAtivos();
+  if (!lista.length) { el.appendChild(document.createTextNode('só você por enquanto')); return; }
+  for (const [uid, o] of lista) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'nome-online' + (ehDoMeuGrupo(uid) ? ' no-grupo' : '');
+    b.textContent = o.nome + ' (' + o.level + ')';
+    b.title = ehDoMeuGrupo(uid) ? 'Está no seu grupo' : 'Clique para convidar para o grupo';
+    b.addEventListener('click', () => convidarParaGrupo(uid));
+    el.appendChild(b);
+  }
 }
 setInterval(() => { if (online.ativo) mostrarListaOnline(); }, 5000);
