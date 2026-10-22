@@ -41,14 +41,13 @@ const MAGIAS = {
     },
   },
   ictus_triplex: {
-    nome: 'Ictus Triplex', classe: 'guerreiro', level: 10, mana: 35, espera: 6000, forca: 0.75, alcance: 3, golpes: 3,
-    descricao: 'Três golpes seguidos no alvo, até 3 quadrados de distância.',
+    nome: 'Ictus Triplex', classe: 'guerreiro', level: 10, mana: 35, espera: 6000, forca: 1.1, alcance: 3, golpes: 2,
+    descricao: 'Duas espadas caem do céu no alvo, até 3 quadrados de distância.',
     lancar(agora) {
       const alvo = alvoAoAlcance(this.alcance); if (!alvo) return false;
-      for (let k = 0; k < 3; k++) {
-        criarEfeito('garra', alvo.x, alvo.y, agora, k * 260);
-        danificarComMagia(alvo, danoDeMagia('melee', this.forca), agora, k * 260 + 120);
-      }
+      criarEfeito('chuva_espadas', alvo.x, alvo.y, agora);
+      danificarComMagia(alvo, danoDeMagia('melee', this.forca), agora, 320); // 1ª espada chega no chão
+      danificarComMagia(alvo, danoDeMagia('melee', this.forca), agora, 460); // 2ª espada
       return true;
     },
   },
