@@ -614,6 +614,7 @@ function desenhar(agora) {
     const p = posicaoVisualMonstro(m, agora);
     if (naTela(p.x, p.y)) lista.push({ monstro: m, x: p.x, y: p.y });
   }
+  for (const o of jogadoresParaDesenhar(agora, naTela)) lista.push(o); // outros jogadores (online.js)
   lista.sort((a, b) => a.y - b.y || (a.arvore !== undefined ? -1 : 0) - (b.arvore !== undefined ? -1 : 0));
 
   for (const c of lista) {
@@ -622,6 +623,7 @@ function desenhar(agora) {
     if (c.arvore !== undefined) desenharArvoreGrande(c.arvore, c.x, c.y, sx, sy, vis);
     else if (c.ehJogador) desenharJogador(sx, sy, agora);
     else if (c.npc) desenharNpc(c.npc, sx, sy);
+    else if (c.outro) desenharOutroJogador(c.outro, sx, sy, agora);
     else {
       if (c.monstro === jogador.alvo) desenharMarcaAlvo(sx, sy);
       desenharMonstro(c.monstro, sx, sy, agora);
@@ -630,6 +632,7 @@ function desenhar(agora) {
 
   // 4) Efeitos por cima de tudo
   desenharEfeitos(agora);
+  desenharFalas(agora, vis); // mensagens do chat em cima da cabeça
   desenharProjeteis(agora);
   desenharTextosFlutuantes(agora);
   desenharBarraChefe();
