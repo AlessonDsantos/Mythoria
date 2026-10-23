@@ -23,8 +23,8 @@ const DANO_CRITICO = 1.5;          // crítico = +50%
 const REDUCAO_GUERREIRO = 0.8;     // guerreiro toma 80% do dano (20% a menos)
 
 const PASSIVAS_ARMA = {
-  espada:    { nome: 'Roubo de vida',  chance: 0.05, duracao: 6000, roubo: 0.25, filtro: 'hue-rotate(240deg) saturate(1.6)',  // vermelho
-               descricao: 'cada golpe cura 25% do dano causado' },
+  espada:    { nome: 'Roubo de vida',  chance: 0.05, duracao: 6000, roubo: 0.50, filtro: 'hue-rotate(240deg) saturate(1.6)',  // vermelho
+               descricao: 'cada golpe cura 50% do dano causado' },
   machado:   { nome: 'Fúria crítica',  chance: 0.05, duracao: 6000, filtro: 'hue-rotate(270deg) saturate(1.8)',               // laranja
                descricao: 'todo golpe é crítico (+50% de dano)' },
   clava:     { nome: 'Esquiva',        chance: 0.05, duracao: 6000, filtro: 'hue-rotate(100deg) saturate(1.4)',               // azul
@@ -33,8 +33,8 @@ const PASSIVAS_ARMA = {
                descricao: 'Distance +40% (mais dano e mais acerto)' },
   cajado:    { nome: 'Fonte de mana',  chance: 0.05, duracao: 6000, filtro: 'hue-rotate(150deg) saturate(1.6)',               // roxo
                descricao: 'o dano do cajado vira mana (100%)' },
-  instrumento: { nome: 'Ressonância', chance: 0.05, duracao: 6000, pulos: 4, raio: 3, parte: 1, filtro: 'hue-rotate(200deg) saturate(1.8)', // rosa
-               descricao: 'cada ataque ricocheteia de monstro em monstro (até 4, pulando até 3 quadrados), com o mesmo dano' },
+  instrumento: { nome: 'Ressonância', chance: 0.05, duracao: 6000, pulos: 5, raio: 3, parte: 1, filtro: 'hue-rotate(200deg) saturate(1.8)', // rosa
+               descricao: 'cada ataque ricocheteia de monstro em monstro (até 5, pulando até 3 quadrados), com o mesmo dano' },
 };
 
 // Texto das passivas de classe (aparecem no painel de magias)
