@@ -81,12 +81,9 @@ const TIPOS_MONSTRO = {
     vida: 500, ataqueMax: 0, defesa: 0, xp: 0, ouro: [0, 0], passo: 1000, visao: 0, loot: [] },
 
   // ---------- Campos do Leste (level 1–5) ----------
-  lobo_branco: { nome: 'Lobo branco', sprite: 'lobo_branco',
-    vida: 50, ataqueMax: 10, defesa: 1, xp: 18, ouro: [2, 4], passo: 420, visao: 5,
-    loot: [{ item: 'presa_lobo', chance: 0.08, qtd: [1, 1] }] },
-  lobo_cinza: { nome: 'Lobo cinzento', sprite: 'lobo_cinza',
-    vida: 65, ataqueMax: 14, defesa: 2, xp: 32, ouro: [3, 8], passo: 360, visao: 6,
-    loot: [{ item: 'presa_lobo', chance: 0.12, qtd: [1, 1] }, { item: 'pele_lobo', chance: 0.08, qtd: [1, 1] }] },
+    lobo: { nome: 'Lobo', sprite: 'lobo_cinza', corpo: 'lobo_cinza_morto',
+    vida: 45, ataqueMax: 10, defesa: 1, xp: 25, ouro: [2, 6], passo: 390, visao: 6,
+    loot: [{ item: 'presa_lobo', chance: 0.1, qtd: [1, 1] }, { item: 'pele_lobo', chance: 0.06, qtd: [1, 1] }] },
 
   // ---------- Pântano (level 5–10) ----------
   // "anim": folha animada nova (veja o topo do arquivo). "parado": fica de tocaia, não anda.
@@ -204,7 +201,6 @@ const TIPOS_MONSTRO = {
 // 0.5 = metade do dano (resiste). Elemento que não aparece = dano normal (1).
 const ELEMENTOS = { fogo: 'fogo', gelo: 'gelo', vento: 'vento', raio: 'raio' };
 const FRAQUEZAS = {
-  lobo_branco:      { fogo: 1.2, gelo: 0.8 },
   lobo_cinza:       { fogo: 1.2 },
   cobra_pantano:    { gelo: 1.5, raio: 1.2 },
   cogumelo:         { fogo: 1.5, vento: 0.8 },
