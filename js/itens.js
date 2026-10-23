@@ -153,7 +153,7 @@ const ITENS = {
   machado_lua:    { nome: 'Machado meia-lua', tipo: 'arma', categoria: 'machado', skill: 'melee', ataque: 35, acerto: 0.95, alcance: 1, valor: 2500 },
   maca_espinhos:  { nome: 'Maça de espinhos', tipo: 'arma', categoria: 'clava', skill: 'melee', ataque: 34, acerto: 0.94, alcance: 1, valor: 2520 },
 
-  katana:      { nome: 'Katana', tipo: 'arma', categoria: 'espada', skill: 'melee', ataque: 35, acerto: 0.90, alcance: 1, valor: 2300 },
+  katana:      { nome: 'Katana', tipo: 'arma', categoria: 'espada', skill: 'melee', ataque: 45, acerto: 0.90, alcance: 1, valor: 2300 },
   sabre:       { nome: 'Sabre', tipo: 'arma', categoria: 'espada', skill: 'melee', ataque: 23, acerto: 0.90, alcance: 1, valor: 2140 },
   adaga_larga: { nome: 'Adaga larga', tipo: 'arma', categoria: 'espada', skill: 'melee', ataque: 25, acerto: 0.92, alcance: 1, valor: 1545 },
   mangual:     { nome: 'Mangual', tipo: 'arma', categoria: 'clava', skill: 'melee', ataque: 36, acerto: 0.93, alcance: 1, valor: 2120 },
