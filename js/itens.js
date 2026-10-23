@@ -95,7 +95,7 @@ const ITENS = {
               ataque: 23, acerto: 0.90, alcance: 3, arremesso: true, quebraEntre: [3, 10], preco: 8, valor: 3, empilha: true,
               descricao: 'Forte, mas alcança menos. Cada uma quebra depois de 3 a 10 ataques.' },
   arco:     { nome: 'Arco', tipo: 'arma', categoria: 'arco', skill: 'distance',
-              ataque: 0, acerto: 0.90, alcance: 5, municao: 'flecha', preco: 300, valor: 90,
+              ataque: 3, acerto: 0.90, alcance: 5, municao: 'flecha', preco: 300, valor: 150,
               descricao: 'Alcança longe. Precisa de flechas no espaço de munição.' },
 
   // ---------- Munição ----------
