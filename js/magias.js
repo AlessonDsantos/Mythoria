@@ -16,20 +16,20 @@ const MAGIAS = {
   // ---------- Curas (todas as classes) ----------
   vita_lux: {
     nome: 'Vita Lux', classe: null, level: 1, mana: 20, espera: 1000,
-    cura: { base: 20, porLevel: 1, porMagia: { mago: 1.5, bardo: 1.5, outros: 2.5 } },
+    cura: { base: 20, porLevel: 1, porMagia: { mago: 1.2, bardo: 1.2, outros: 1.90 } },
     descricao: 'Cura um pouco de vida. Fica mais forte com o level e o Magic Level.',
     lancar(agora) { return curar(valorCura(this), 'cura', agora); },
   },
   sanatio: {
     nome: 'Sanatio', classe: null, level: 10, mana: 70, espera: 10000,
-    cura: { base: 100, porLevel: 2, porMagia: { mago: 4, bardo: 4, outros: 2.5 } },
+    cura: { base: 100, porLevel: 2, porMagia: { mago: 3, bardo: 3, outros: 2.2 } },
     descricao: 'Cura muita vida. Fica mais forte com o level e o Magic Level.',
     lancar(agora) { return curar(valorCura(this), 'pilar', agora); },
   },
 
   // ---------- Guerreiro ----------
   ictus_validus: {
-    nome: 'Ictus Validus', classe: 'guerreiro', level: 5, mana: 15, espera: 3000, forca: 1.3, alcance: 5,
+    nome: 'Ictus Validus', classe: 'guerreiro', level: 5, mana: 15, espera: 3000, forca: 1.1, alcance: 5,
     descricao: 'Arremessa uma espada no alvo, até 5 quadrados.',
   lancar(agora) {
       const alvo = alvoAoAlcance(this.alcance); if (!alvo) return false;
@@ -41,7 +41,7 @@ const MAGIAS = {
     },
   },
   ictus_triplex: {
-    nome: 'Ictus Triplex', classe: 'guerreiro', level: 10, mana: 35, espera: 6000, forca: 1.1, alcance: 3, golpes: 2,
+    nome: 'Ictus Triplex', classe: 'guerreiro', level: 10, mana: 35, espera: 6000, forca: 0.80, alcance: 3, golpes: 2,
     descricao: 'Duas espadas caem do céu no alvo, até 3 quadrados de distância.',
     lancar(agora) {
       const alvo = alvoAoAlcance(this.alcance); if (!alvo) return false;
@@ -78,7 +78,7 @@ const MAGIAS = {
     },
   },
    ictus_rotatorius: {
-    nome: 'Ictus Rotatorius', classe: 'guerreiro', level: 25, mana: 90, espera: 16000, forca: 1.5, raio: 1,
+    nome: 'Ictus Rotatorius', classe: 'guerreiro', level: 25, mana: 90, espera: 16000, forca: 1.6, raio: 1,
     descricao: 'Golpe giratório: acerta todos os monstros em volta.',
     lancar(agora) {
       criarEfeito('espada_giro', jogador.x, jogador.y, agora);
@@ -88,7 +88,7 @@ const MAGIAS = {
   },
   // ---------- Arqueiro ----------
   ictus_certus: {
-    nome: 'Ictus Certus', classe: 'arqueiro', level: 5, mana: 15, espera: 2000, forca: 1.2, alcance: 6,
+    nome: 'Ictus Certus', classe: 'arqueiro', level: 5, mana: 15, espera: 2000, forca: 1.1, alcance: 6,
     descricao: 'Uma flecha grande e poderosa no alvo.',
     lancar(agora) {
       const alvo = alvoAoAlcance(this.alcance); if (!alvo) return false;
@@ -97,7 +97,7 @@ const MAGIAS = {
     },
   },
   ictus_duplex: {
-    nome: 'Ictus Duplex', classe: 'arqueiro', level: 10, mana: 40, espera: 6000, forca: 1.0, alcance: 6, golpes: 2,
+    nome: 'Ictus Duplex', classe: 'arqueiro', level: 10, mana: 40, espera: 6000, forca: 0.80, alcance: 6, golpes: 2,
     descricao: 'Duas flechas grandes seguidas no alvo.',
     lancar(agora) {
       const alvo = alvoAoAlcance(this.alcance); if (!alvo) return false;
@@ -130,7 +130,7 @@ const MAGIAS = {
     },
   },
   pluvia_sagittarum: {
-    nome: 'Pluvia Sagittarum', classe: 'arqueiro', level: 25, mana: 110, espera: 16000, forca: 1.5, alcance: 6, raio: 2,
+    nome: 'Pluvia Sagittarum', classe: 'arqueiro', level: 25, mana: 110, espera: 16000, forca: 1.6, alcance: 6, raio: 2,
     descricao: 'Chuva de flechas em volta do alvo (área 5x5).',
     lancar(agora) {
       const alvo = alvoAoAlcance(this.alcance); if (!alvo) return false;
@@ -155,7 +155,7 @@ const MAGIAS = {
   // ---------- Mago (elementalista) ----------
   // elemento: o dano é multiplicado pela fraqueza/resistência do monstro (FRAQUEZAS, monstros.js)
   flatus_venti: {
-    nome: 'Flatus Venti', classe: 'mago', level: 5, mana: 15, espera: 2000, forca: 1.25, alcance: 5, elemento: 'vento',
+    nome: 'Flatus Venti', classe: 'mago', level: 5, mana: 15, espera: 2000, forca: 1.0, alcance: 5, elemento: 'vento',
     descricao: 'Rajada de vento: duas lâminas de ar cortam o alvo.',
     lancar(agora) {
       const alvo = alvoAoAlcance(this.alcance); if (!alvo) return false;
@@ -222,7 +222,7 @@ const MAGIAS = {
   // ---------- Bardo (suporte musical) ----------
   // O dano vem do Magic Level, como o do mago. Som não tem elemento.
   quinque_notae: {
-    nome: 'Quinque Notae', classe: 'bardo', level: 5, mana: 15, espera: 2000, forca: 1.12, forcaTotal: true, alcance: 5, golpes: 5,
+    nome: 'Quinque Notae', classe: 'bardo', level: 5, mana: 15, espera: 2000, forca: 1.0, forcaTotal: true, alcance: 5, golpes: 5,
     descricao: 'Cinco notas seguidas no alvo. A defesa do monstro conta uma vez só, no total das cinco.',
     lancar(agora) {
       const alvo = alvoAoAlcance(this.alcance); if (!alvo) return false;
@@ -238,7 +238,7 @@ const MAGIAS = {
     },
   },
   unda_sonora: {
-    nome: 'Unda Sonora', classe: 'bardo', level: 10, mana: 40, espera: 6000, forca: 1.1, raio: 1,
+    nome: 'Unda Sonora', classe: 'bardo', level: 10, mana: 40, espera: 4000, forca: 1.2, raio: 1,
     descricao: 'Uma onda de notas sai de você e acerta tudo em volta (área 3x3).',
     lancar(agora) {
       criarEfeito('onda_som', jogador.x, jogador.y, agora);
