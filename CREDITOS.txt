@@ -50,3 +50,6 @@ Bardo (v0.17)
   Instrumentos (flauta, alaúde, violino): desenhos do autor do jogo.
   Notas musicais (efeitos e ícones das magias do bardo): desenhadas para o Mythoria.
   Sprite do bardo: Pipoya (Male 04-1).
+
+Monstros novos (v0.20): lobo cinzento, slime, sapo, crocodilo, Rei Slime, aranha, tarântula,
+troll sombrio e Centauro Sombrio — desenhos do autor do jogo.
