@@ -109,7 +109,7 @@ const TIPOS_MONSTRO = {
   lodo: { nome: 'Lodo', sprite: 'lodo',
     vida: 170, ataqueMax: 30, defesa: 4, xp: 50, ouro: [5, 14], passo: 620, visao: 5, loot: [] },
   planta_carnivora: { nome: 'Planta carnívora', sprite: 'planta_carnivora', feminino: true, anim: ANIM.planta_carnivora, parado: true,
-    alcance: 5, projetil: 'cuspe', impacto: 'veneno',
+    alcance: 5, projetil: 'cuspe_planta', impacto: 'cuspe_planta_fim',
     vida: 200, ataqueMax: 34, defesa: 5, xp: 61, ouro: [4, 16], passo: 400, visao: 5,
     loot: [{ item: 'erva', chance: 0.4, qtd: [1, 3] }] },
   // v0.20 — pântano novo (desenhos do autor). Os de cima ficam guardados pra outros lugares.
