@@ -15,20 +15,18 @@ const ESPERA_TASK = 24 * 60 * 60 * 1000; // 24 horas em milissegundos
 
 const TASKS = [
   { id: 'lobo_cinza', level: 1, quantidade: 30, xp: 270, ouro: 200 },
-  { id: 'cobra_pantano', level: 5, quantidade: 20, xp: 500, ouro: 300 },
-  { id: 'cogumelo', level: 6, quantidade: 20, xp: 500, ouro: 300 },
-  { id: 'lodo', level: 7, quantidade: 20, xp: 640, ouro: 360 },
+  { id: 'slime', level: 5, quantidade: 20, xp: 560, ouro: 300 },
+  { id: 'sapo', level: 6, quantidade: 20, xp: 800, ouro: 340 },
   { id: 'planta_carnivora', level: 8, quantidade: 20, xp: 980, ouro: 400 },
-  { id: 'bruxa_pantano', level: 9, quantidade: 20, xp: 1010, ouro: 440 },
+  { id: 'crocodilo', level: 9, quantidade: 20, xp: 1280, ouro: 460 },
   { id: 'goblin', level: 10, quantidade: 25, xp: 1520, ouro: 630 },
   { id: 'goblin_arqueiro', level: 11, quantidade: 25, xp: 1820, ouro: 700 },
   { id: 'goblin_guerreiro', level: 12, quantidade: 25, xp: 2480, ouro: 800 },
   { id: 'goblin_mago', level: 13, quantidade: 25, xp: 2480, ouro: 800 },
   { id: 'sombra', level: 15, quantidade: 25, xp: 3280, ouro: 950 },
-  { id: 'esqueleto_pequeno', level: 15, quantidade: 25, xp: 3280, ouro: 950 },
-  { id: 'esqueleto', level: 17, quantidade: 25, xp: 4160, ouro: 1050 },
-  { id: 'esqueleto_negro', level: 18, quantidade: 25, xp: 5180, ouro: 1200 },
-  { id: 'zumbi', level: 19, quantidade: 25, xp: 5180, ouro: 1200 },
+  { id: 'aranha_floresta', level: 16, quantidade: 25, xp: 3700, ouro: 1000 },
+  { id: 'tarantula', level: 17, quantidade: 25, xp: 4600, ouro: 1100 },
+  { id: 'troll_sombrio', level: 19, quantidade: 25, xp: 5600, ouro: 1250 },
   { id: 'fantasma', level: 20, quantidade: 30, xp: 6860, ouro: 1500 },
   { id: 'fantasma_cinza', level: 21, quantidade: 30, xp: 7560, ouro: 1560 },
   { id: 'abobora', level: 21, quantidade: 30, xp: 7560, ouro: 1560 },
@@ -54,6 +52,11 @@ const TASKS = [
 let tasksAberto = null; // NPC com quem está falando
 
 function taskPorId(id) { return TASKS.find(t => t.id === id); }
+
+// Task de um monstro que saiu do jogo (ex.: trocado por outro): some sem ocupar vaga
+function limparTasksVelhas() {
+  for (const id in jogador.tasks.ativas) if (!taskPorId(id) || !TIPOS_MONSTRO[id]) delete jogador.tasks.ativas[id];
+}
 
 // Quanto falta (ms) pra poder fazer de novo (0 = liberada)
 function esperaDaTask(id) {
@@ -97,6 +100,7 @@ function entregarTask(id) {
 
 // Chamado em matarMonstro (combate.js)
 function contarTask(tipo) {
+  limparTasksVelhas();
   const ativas = jogador.tasks.ativas;
   if (!(tipo in ativas)) return;
   const t = taskPorId(tipo);
@@ -112,6 +116,7 @@ function contarTask(tipo) {
 // ---------- Janela ----------
 
 function abrirTasks(npc) {
+  limparTasksVelhas();
   tasksAberto = npc;
   npcPendente = null;
   limparAlvo();
