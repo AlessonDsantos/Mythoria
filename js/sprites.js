@@ -31,6 +31,7 @@ const IMAGENS = {
   npc_otto:    'img/personagens/npc_otto.png',
   npc_aldric:  'img/personagens/npc_aldric.png',
   fantoche:    'img/monstros/fantoche.png',  // imagem única (o espantalho não anda)
+  lobo_morto:  'img/monstros/lobo_cinza_morto.png',
 };
 
 // Monstros: uma folha animada 3x4 para cada tipo em TIPOS_MONSTRO (monstros.js),
