@@ -6,7 +6,7 @@
 // do servidor e guarda uma cópia; sem internet, usa a cópia guardada.
 // Mude o nome do CACHE quando quiser apagar as cópias antigas.
 // =====================================================
-const CACHE = 'mythoria-v0.19';
+const CACHE = 'mythoria-v0.20';
 
 self.addEventListener('install', () => self.skipWaiting());
 
