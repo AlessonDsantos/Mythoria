@@ -14,8 +14,7 @@ const MAX_TASKS = 3;
 const ESPERA_TASK = 24 * 60 * 60 * 1000; // 24 horas em milissegundos
 
 const TASKS = [
-  { id: 'lobo_branco', level: 1, quantidade: 20, xp: 140, ouro: 100 },
-  { id: 'lobo_cinza', level: 3, quantidade: 20, xp: 270, ouro: 200 },
+  { id: 'lobo_cinza', level: 1, quantidade: 30, xp: 270, ouro: 200 },
   { id: 'cobra_pantano', level: 5, quantidade: 20, xp: 500, ouro: 300 },
   { id: 'cogumelo', level: 6, quantidade: 20, xp: 500, ouro: 300 },
   { id: 'lodo', level: 7, quantidade: 20, xp: 640, ouro: 360 },
