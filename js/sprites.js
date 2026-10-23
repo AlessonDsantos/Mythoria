@@ -31,7 +31,6 @@ const IMAGENS = {
   npc_otto:    'img/personagens/npc_otto.png',
   npc_aldric:  'img/personagens/npc_aldric.png',
   fantoche:    'img/monstros/fantoche.png',  // imagem única (o espantalho não anda)
-  lobo_morto:  'img/monstros/lobo_cinza_morto.png',
 };
 
 // Monstros: uma folha animada 3x4 para cada tipo em TIPOS_MONSTRO (monstros.js),
@@ -39,6 +38,9 @@ const IMAGENS = {
 for (const id in TIPOS_MONSTRO) {
   const s = TIPOS_MONSTRO[id].sprite;
   if (!IMAGENS[s]) IMAGENS[s] = 'img/monstros/' + s + '.png';
+  // corpo próprio (campo "corpo"): img/monstros/<corpo>.png
+  const c = TIPOS_MONSTRO[id].corpo;
+  if (c && !IMAGENS[c]) IMAGENS[c] = 'img/monstros/' + c + '.png';
 }
 
 // Efeitos de magia: img/efeitos/<nome>.png, com a chave "fx_<nome>"
