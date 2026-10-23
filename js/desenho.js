@@ -373,7 +373,9 @@ function desenharImagemMonstro(m, sx, sy, agora, morto) {
     if (tipo.anim) {
       desenharFolhaAnimada(m, tipo.anim, imagem, sx, sy, agora, morto);
     } else if (!tipo.imagemUnica) {
-      desenharPersonagem(imagem, m.direcao, quadroAndando(andando, agora), sx, sy);
+      // vistaDeCima (crocodilo): o desenho é visto de cima, então fica centralizado no quadrado em vez de "em pé"
+      const ajuste = tipo.vistaDeCima ? imagem.height / 8 - T / 2 : 0;
+      desenharPersonagem(imagem, m.direcao, quadroAndando(andando, agora), sx, sy + ajuste);
     } else {
       const pulo = andando ? Math.abs(Math.sin(agora / 90)) * 2 : 0;
       const x = sx + T / 2 - imagem.width / 2;
@@ -446,7 +448,14 @@ function desenharMonstro(m, sx, sy, agora) {
     return;
   }
 
-  desenharSombra(cx, sy + T - 2, 11);
+  const tipoM = TIPOS_MONSTRO[m.tipo];
+  if (tipoM.vistaDeCima) {
+    // sombra embaixo do corpo inteiro, colada nele (visto de cima)
+    ctx.fillStyle = 'rgba(0,0,0,0.28)';
+    ctx.beginPath(); ctx.ellipse(cx + 2, sy + T / 2 + 4, 12, 12, 0, 0, Math.PI * 2); ctx.fill();
+  } else {
+    desenharSombra(cx, sy + T - 2, 11);
+  }
   desenharImagemMonstro(m, sx, sy, agora, false);
   const tipo = TIPOS_MONSTRO[m.tipo];
   if (monstroComDebuff(m, agora)) {   // debuff do bardo: notas roxas girando em cima da cabeça
