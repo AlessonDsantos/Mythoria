@@ -77,19 +77,15 @@ const MAGIAS = {
       return true;
     },
   },
-  ictus_rotatorius: {
+   ictus_rotatorius: {
     nome: 'Ictus Rotatorius', classe: 'guerreiro', level: 25, mana: 90, espera: 16000, forca: 1.5, raio: 1,
     descricao: 'Golpe giratório: acerta todos os monstros em volta.',
     lancar(agora) {
-      criarEfeito('onda', jogador.x, jogador.y, agora);
-      for (const [dx, dy] of [[0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1]]) {
-        criarEfeito('corte', jogador.x + dx, jogador.y + dy, agora, 60);
-      }
-      for (const m of monstrosNaArea(jogador, 1)) danificarComMagia(m, danoDeMagia('melee', this.forca), agora, 150);
+      criarEfeito('espada_giro', jogador.x, jogador.y, agora);
+      for (const m of monstrosNaArea(jogador, this.raio)) danificarComMagia(m, danoDeMagia('melee', this.forca), agora, 250);
       return true;
     },
   },
-
   // ---------- Arqueiro ----------
   ictus_certus: {
     nome: 'Ictus Certus', classe: 'arqueiro', level: 5, mana: 15, espera: 2000, forca: 1.2, alcance: 6,
