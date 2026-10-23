@@ -191,8 +191,8 @@ function atacarMonstro(m, agora) {
   }
 
   // 2) Quanto de dano? Ataque + skill + level, menos a defesa do monstro
-  const danoMax = Math.round(ataque * (0.5 + skill / 20) + jogador.level / 2);
-  const danoMin = Math.ceil(danoMax * 0.3);
+  const danoMax = Math.round(ataque * (0.8 + skill / 20) + jogador.level / 2);
+  const danoMin = Math.ceil(danoMax * 0.5);
   let dano = Math.max(0, aleatorioInt(danoMin, danoMax) - aleatorioInt(0, defesaMonstro(m, agora)));
   if (arma.elemento) dano = Math.round(dano * multiplicadorElemento(m.tipo, arma.elemento)); // fraqueza/resistência
 
