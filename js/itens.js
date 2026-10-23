@@ -31,16 +31,16 @@ const ITENS = {
   frango:       { nome: 'Frango assado', tipo: 'consumivel', fome: 10, preco: 15, valor: 6, empilha: true },
   // Comidas especiais: além de tirar a fome, dão regeneração extra por 30 segundos
   //   regen: { vida, mana } a cada 2 segundos
-  ensopado:     { nome: 'Ensopado do caçador', tipo: 'consumivel', fome: 8, regen: { vida: 5, mana: 3 }, preco: 40, valor: 12, empilha: true },
-  torta_real:   { nome: 'Torta real', tipo: 'consumivel', fome: 12, regen: { vida: 15, mana: 10 }, preco: 150, valor: 45, empilha: true },
+  ensopado:     { nome: 'Ensopado do caçador', tipo: 'consumivel', fome: 8, regen: { vida: 10, mana: 40 }, preco: 80, valor: 12, empilha: true },
+  torta_real:   { nome: 'Torta real', tipo: 'consumivel', fome: 12, regen: { vida: 30, mana: 10 }, preco: 90, valor: 45, empilha: true },
   // Poções: curam na hora
-  pocao_mana:   { nome: 'Poção de mana', tipo: 'consumivel', mana: 60, preco: 40, valor: 10, empilha: true,
+  pocao_mana:   { nome: 'Poção de mana', tipo: 'consumivel', mana: 60, preco: 50, valor: 10, empilha: true,
                   descricao: 'Recupera 60 de mana.' },
-  pocao:        { nome: 'Poção de vida', tipo: 'consumivel', cura: 60, preco: 40, valor: 10, empilha: true,
-                  descricao: 'Recupera 60 de vida.' },
-  pocao_grande: { nome: 'Poção grande', tipo: 'consumivel', cura: 130, preco: 100, valor: 25, empilha: true,
-                  descricao: 'Recupera 130 de vida.' },
-  pocao_enorme: { nome: 'Poção enorme de vida', tipo: 'consumivel', cura: 300, preco: 220, valor: 55, empilha: true,
+  pocao:        { nome: 'Poção de vida', tipo: 'consumivel', cura: 110, preco: 50, valor: 10, empilha: true,
+                  descricao: 'Recupera 110 de vida.' },
+  pocao_grande: { nome: 'Poção grande', tipo: 'consumivel', cura: 160, preco: 100, valor: 25, empilha: true,
+                  descricao: 'Recupera 160 de vida.' },
+  pocao_enorme: { nome: 'Poção enorme de vida', tipo: 'consumivel', cura: 300, preco: 200, valor: 55, empilha: true,
                   descricao: 'Recupera 300 de vida.' },
   pocao_mana_enorme: { nome: 'Poção enorme de mana', tipo: 'consumivel', mana: 200, preco: 180, valor: 45, empilha: true,
                   descricao: 'Recupera 200 de mana.' },
@@ -66,42 +66,42 @@ const ITENS = {
   // ---------- Armas de melee ----------
   // Espadas: equilibradas | Machados: fortes, erram mais | Clavas: fracas, quase não erram
   espada_curta:   { nome: 'Espada curta', tipo: 'arma', categoria: 'espada', skill: 'melee',
-                    ataque: 10, acerto: 0.85, alcance: 1, preco: 60, valor: 20, cor: '#c9ced6' },
+                    ataque: 13, acerto: 0.95, alcance: 1, preco: 60, valor: 20, cor: '#c9ced6' },
   espada:         { nome: 'Espada', tipo: 'arma', categoria: 'espada', skill: 'melee',
-                    ataque: 16, acerto: 0.85, alcance: 1, preco: 250, valor: 80, cor: '#dfe3ea' },
+                    ataque: 19, acerto: 0.95, alcance: 1, preco: 250, valor: 80, cor: '#dfe3ea' },
   espada_longa:   { nome: 'Espada longa', tipo: 'arma', categoria: 'espada', skill: 'melee',
-                    ataque: 22, acerto: 0.85, alcance: 1, preco: 700, valor: 220, cor: '#f2f4f8' },
+                    ataque: 26, acerto: 0.95, alcance: 1, preco: 700, valor: 220, cor: '#f2f4f8' },
   machado_mao:    { nome: 'Machadinha', tipo: 'arma', categoria: 'machado', skill: 'melee',
-                    ataque: 12, acerto: 0.75, alcance: 1, preco: 60, valor: 20, cor: '#b9bec6' },
+                    ataque: 15, acerto: 0.95, alcance: 1, preco: 60, valor: 20, cor: '#b9bec6' },
   machado:        { nome: 'Machado', tipo: 'arma', categoria: 'machado', skill: 'melee',
-                    ataque: 19, acerto: 0.75, alcance: 1, preco: 260, valor: 85, cor: '#d0d5dd' },
+                    ataque: 21, acerto: 0.95, alcance: 1, preco: 260, valor: 85, cor: '#d0d5dd' },
   machado_guerra: { nome: 'Machado de guerra', tipo: 'arma', categoria: 'machado', skill: 'melee',
-                    ataque: 26, acerto: 0.75, alcance: 1, preco: 750, valor: 240, cor: '#eef0f4' },
+                    ataque: 28, acerto: 0.95, alcance: 1, preco: 750, valor: 240, cor: '#eef0f4' },
   clava:          { nome: 'Clava', tipo: 'arma', categoria: 'clava', skill: 'melee',
-                    ataque: 9, acerto: 0.95, alcance: 1, preco: 40, valor: 12, cor: '#8a5a2b' },
+                    ataque: 12, acerto: 0.95, alcance: 1, preco: 40, valor: 12, cor: '#8a5a2b' },
   maca:           { nome: 'Maça', tipo: 'arma', categoria: 'clava', skill: 'melee',
-                    ataque: 15, acerto: 0.95, alcance: 1, preco: 240, valor: 75, cor: '#9aa0a8' },
+                    ataque: 16, acerto: 0.95, alcance: 1, preco: 240, valor: 75, cor: '#9aa0a8' },
   martelo_guerra: { nome: 'Martelo de guerra', tipo: 'arma', categoria: 'clava', skill: 'melee',
-                    ataque: 21, acerto: 0.95, alcance: 1, preco: 680, valor: 210, cor: '#c0c5cc' },
+                    ataque: 27, acerto: 0.95, alcance: 1, preco: 680, valor: 210, cor: '#c0c5cc' },
 
   // ---------- Armas de distância ----------
   shuriken: { nome: 'Shuriken', tipo: 'arma', categoria: 'arremesso', skill: 'distance',
-              ataque: 13, acerto: 0.85, alcance: 4, arremesso: true, quebraEntre: [3, 10], preco: 3, valor: 1, empilha: true,
+              ataque: 19, acerto: 0.90, alcance: 4, arremesso: true, quebraEntre: [3, 10], preco: 3, valor: 1, empilha: true,
               descricao: 'Estrela de arremesso. Cada uma quebra depois de 3 a 10 ataques.' },
   shuriken_aprendiz: { nome: 'Shuriken do aprendiz', tipo: 'arma', categoria: 'arremesso', skill: 'distance',
-              ataque: 10, acerto: 0.85, alcance: 4, arremesso: true, infinita: true, valor: 0,
+              ataque: 13, acerto: 0.90, alcance: 4, arremesso: true, infinita: true, valor: 0,
               descricao: 'Presente para iniciantes. Mais fraca, mas nunca quebra.' },
   lanca:    { nome: 'Lança', tipo: 'arma', categoria: 'arremesso', skill: 'distance',
-              ataque: 20, acerto: 0.75, alcance: 3, arremesso: true, quebraEntre: [3, 10], preco: 8, valor: 3, empilha: true,
+              ataque: 23, acerto: 0.90, alcance: 3, arremesso: true, quebraEntre: [3, 10], preco: 8, valor: 3, empilha: true,
               descricao: 'Forte, mas alcança menos. Cada uma quebra depois de 3 a 10 ataques.' },
   arco:     { nome: 'Arco', tipo: 'arma', categoria: 'arco', skill: 'distance',
               ataque: 0, acerto: 0.90, alcance: 5, municao: 'flecha', preco: 300, valor: 90,
               descricao: 'Alcança longe. Precisa de flechas no espaço de munição.' },
 
   // ---------- Munição ----------
-  flecha:       { nome: 'Flecha', tipo: 'municao', municaoDe: 'flecha', ataque: 12,
+  flecha:       { nome: 'Flecha', tipo: 'municao', municaoDe: 'flecha', ataque: 15,
                   preco: 2, valor: 1, empilha: true, descricao: 'Munição para arco.' },
-  flecha_ferro: { nome: 'Flecha de ferro', tipo: 'municao', municaoDe: 'flecha', ataque: 18,
+  flecha_ferro: { nome: 'Flecha de ferro', tipo: 'municao', municaoDe: 'flecha', ataque: 26,
                   preco: 5, valor: 2, empilha: true, descricao: 'Ponta de ferro: mais dano.' },
 
   // ---------- Capacetes ----------
@@ -129,34 +129,34 @@ const ITENS = {
   // ===================================================================
   // Cajados (só o mago usa): atacam de longe sozinhos, com um tiro do elemento do cajado.
   //   tiro: efeito que voa até o monstro (EFEITOS)   elemento: fogo, gelo, vento ou raio (veja FRAQUEZAS)
-  cajado_aprendiz: { nome: 'Cajado de fogo', tipo: 'arma', categoria: 'cajado', classe: 'mago', skill: 'magia', ataque: 11, acerto: 0.92, alcance: 4,
+  cajado_aprendiz: { nome: 'Cajado de fogo', tipo: 'arma', categoria: 'cajado', classe: 'mago', skill: 'magia', ataque: 13, acerto: 0.92, alcance: 5,
                      tiro: 'bola_fogo', elemento: 'fogo', preco: 80, valor: 20 },
-  cajado_vento:    { nome: 'Cajado dos ventos', tipo: 'arma', categoria: 'cajado', classe: 'mago', skill: 'magia', ataque: 19, acerto: 0.92, alcance: 4,
+  cajado_vento:    { nome: 'Cajado dos ventos', tipo: 'arma', categoria: 'cajado', classe: 'mago', skill: 'magia', ataque: 19, acerto: 0.92, alcance: 5,
                      tiro: 'vento', elemento: 'vento', preco: 600, valor: 200 },
-  cajado_trovao:   { nome: 'Cajado de raio', tipo: 'arma', categoria: 'cajado', classe: 'mago', skill: 'magia', ataque: 27, acerto: 0.92, alcance: 5,
+  cajado_trovao:   { nome: 'Cajado de raio', tipo: 'arma', categoria: 'cajado', classe: 'mago', skill: 'magia', ataque: 28, acerto: 0.92, alcance: 5,
                      tiro: 'faisca', elemento: 'raio', valor: 700 },   // sem drop ainda: o autor decide onde cai
-  cajado_gelo:     { nome: 'Cajado de gelo', tipo: 'arma', categoria: 'cajado', classe: 'mago', skill: 'magia', ataque: 23, acerto: 0.92, alcance: 4,
+  cajado_gelo:     { nome: 'Cajado de gelo', tipo: 'arma', categoria: 'cajado', classe: 'mago', skill: 'magia', ataque: 24, acerto: 0.92, alcance: 5,
                      tiro: 'gelo', elemento: 'gelo', valor: 450 },     // status no chute; sem drop ainda
 
   // Instrumentos (só o bardo usa): atacam de longe com uma nota musical, sem elemento.
   // A flauta é a arma inicial (sem "preco": a loja não vende, mas compra de volta).
   //   tiros: quantos projéteis saem (o dano conta uma vez só)   volta: o tiro volta pra você depois de acertar
-  flauta:  { nome: 'Flauta', tipo: 'arma', categoria: 'instrumento', classe: 'bardo', skill: 'magia', ataque: 11, acerto: 0.92, alcance: 4,
+  flauta:  { nome: 'Flauta', tipo: 'arma', categoria: 'instrumento', classe: 'bardo', skill: 'magia', ataque: 16, acerto: 0.92, alcance: 5,
              tiro: 'nota_grande', valor: 20 },
-  alaude:  { nome: 'Alaúde', tipo: 'arma', categoria: 'instrumento', classe: 'bardo', skill: 'magia', ataque: 15, acerto: 0.92, alcance: 4,
+  alaude:  { nome: 'Alaúde', tipo: 'arma', categoria: 'instrumento', classe: 'bardo', skill: 'magia', ataque: 22, acerto: 0.92, alcance: 5,
              tiro: 'nota_roxa', tiros: 3, preco: 300, valor: 90 },
-  violino: { nome: 'Violino', tipo: 'arma', categoria: 'instrumento', classe: 'bardo', skill: 'magia', ataque: 20, acerto: 0.92, alcance: 4,
+  violino: { nome: 'Violino', tipo: 'arma', categoria: 'instrumento', classe: 'bardo', skill: 'magia', ataque: 29, acerto: 0.92, alcance: 5,
              tiro: 'cordas', preco: 700, valor: 230 },
 
   // v0.15 — status no chute (ajuste à vontade)
-  machado_runico: { nome: 'Machado rúnico', tipo: 'arma', categoria: 'machado', skill: 'melee', ataque: 28, acerto: 0.76, alcance: 1, valor: 900 },
-  machado_lua:    { nome: 'Machado meia-lua', tipo: 'arma', categoria: 'machado', skill: 'melee', ataque: 24, acerto: 0.78, alcance: 1, valor: 500 },
-  maca_espinhos:  { nome: 'Maça de espinhos', tipo: 'arma', categoria: 'clava', skill: 'melee', ataque: 24, acerto: 0.94, alcance: 1, valor: 520 },
+  machado_runico: { nome: 'Machado rúnico', tipo: 'arma', categoria: 'machado', skill: 'melee', ataque: 31, acerto: 0.95, alcance: 1, valor: 2900 },
+  machado_lua:    { nome: 'Machado meia-lua', tipo: 'arma', categoria: 'machado', skill: 'melee', ataque: 35, acerto: 0.95, alcance: 1, valor: 2500 },
+  maca_espinhos:  { nome: 'Maça de espinhos', tipo: 'arma', categoria: 'clava', skill: 'melee', ataque: 34, acerto: 0.94, alcance: 1, valor: 2520 },
 
-  katana:      { nome: 'Katana', tipo: 'arma', categoria: 'espada', skill: 'melee', ataque: 25, acerto: 0.88, alcance: 1, valor: 300 },
-  sabre:       { nome: 'Sabre', tipo: 'arma', categoria: 'espada', skill: 'melee', ataque: 19, acerto: 0.86, alcance: 1, valor: 140 },
-  adaga_larga: { nome: 'Adaga larga', tipo: 'arma', categoria: 'espada', skill: 'melee', ataque: 13, acerto: 0.92, alcance: 1, valor: 45 },
-  mangual:     { nome: 'Mangual', tipo: 'arma', categoria: 'clava', skill: 'melee', ataque: 18, acerto: 0.93, alcance: 1, valor: 120 },
+  katana:      { nome: 'Katana', tipo: 'arma', categoria: 'espada', skill: 'melee', ataque: 35, acerto: 0.90, alcance: 1, valor: 2300 },
+  sabre:       { nome: 'Sabre', tipo: 'arma', categoria: 'espada', skill: 'melee', ataque: 23, acerto: 0.90, alcance: 1, valor: 2140 },
+  adaga_larga: { nome: 'Adaga larga', tipo: 'arma', categoria: 'espada', skill: 'melee', ataque: 25, acerto: 0.92, alcance: 1, valor: 1545 },
+  mangual:     { nome: 'Mangual', tipo: 'arma', categoria: 'clava', skill: 'melee', ataque: 36, acerto: 0.93, alcance: 1, valor: 2120 },
 
   chapeu_cacador: { nome: 'Chapéu de caçador', tipo: 'capacete', defesa: 2, valor: 40 },
   elmo_cruzado:   { nome: 'Elmo cruzado', tipo: 'capacete', defesa: 5, valor: 150 },
