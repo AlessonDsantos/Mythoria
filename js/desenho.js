@@ -351,12 +351,15 @@ function desenharImagemMonstro(m, sx, sy, agora, morto) {
   const tipo = TIPOS_MONSTRO[m.tipo];
   const imagem = img[tipo.sprite];
   const andando = !morto && monstroAndando(m, agora);
- 
-  if (morto && tipo.corpo && img[tipo.corpo]) {
-    ctx.drawImage(img[tipo.corpo], sx, sy);
+
+  // Monstro com imagem própria de corpo (campo "corpo" no monstros.js), centralizada no quadrado
+  const corpo = morto && tipo.corpo ? img[tipo.corpo] : null;
+  if (corpo && corpo.complete && corpo.naturalWidth) {
+    ctx.drawImage(corpo, Math.round(sx + T / 2 - corpo.width / 2), Math.round(sy + T / 2 + 4 - corpo.height / 2));
     return;
-  
-    ctx.save();
+  }
+
+  ctx.save();
   if (morto) {
     // Corpo: achatado, cinza e meio transparente
     ctx.translate(0, sy + T - 2);
@@ -392,6 +395,7 @@ function desenharFolhaAnimada(m, a, imagem, sx, sy, agora, morto) {
   const linha = LINHA_DIRECAO[m.direcao] || 0;
   const msQuadro = a.lento ? 200 : MS_POR_QUADRO;
   let quadro = morto ? 0 : Math.floor(agora / msQuadro + m.id * 3) % a.quadros;
+  if (a.andar && !morto) quadro = quadroAndando(monstroAndando(m, agora), agora); // pernas só mexem andando
   let l = linha;
   const idadeAtaque = agora - (m.ultimoAtaque || -Infinity);
   if (!morto && a.ataque && idadeAtaque < a.ataque * MS_POR_QUADRO) {
@@ -406,6 +410,7 @@ function desenharFolhaAnimada(m, a, imagem, sx, sy, agora, morto) {
 function alturaMonstro(m) {
   const tipo = TIPOS_MONSTRO[m.tipo];
   if (tipo.anim) return tipo.anim.altura + 2;
+  if (tipo.altura) return tipo.altura + 2;
   return tipo.imagemUnica ? img[tipo.sprite].height : img[tipo.sprite].height / 4;
 }
 
