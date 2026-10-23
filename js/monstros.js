@@ -40,6 +40,10 @@ const ANIM = {
   ceifador:         { tam: 56, quadros: 3, ataque: 0, pe: 55, altura: 54, lento: true },
   demonio_alado:    { tam: 56, quadros: 3, ataque: 0, pe: 55, altura: 53, lento: true },
   feiticeira_gelo:  { tam: 96, quadros: 3, ataque: 0, pe: 79, altura: 64, lento: true },
+  // v0.20 (desenhos do autor): folha 3x8 — linhas 0–3 andando, 4–7 atacando.
+  //   andar: true = só mexe as pernas quando está andando (parado fica no quadro do meio)
+  centauro_sombrio: { tam: 96, quadros: 3, ataque: 3, pe: 90, altura: 86, andar: true, lento: true },
+  rei_slime:        { tam: 96, quadros: 3, ataque: 3, pe: 90, altura: 72, lento: true },
 };
 
 // ---------- Loot dos monstros de level 15+ ----------
@@ -51,6 +55,11 @@ const LOOT_ESQUELETO_PEQUENO = [item('adaga_larga', 0.03), item('moeda_antiga', 
 const LOOT_ESQUELETO         = [item('sabre', 0.02), item('capacete_ferro', 0.02), item('moeda_antiga', 0.08)];
 const LOOT_ESQUELETO_NEGRO   = [item('sabre', 0.03), item('elmo_cruzado', 0.01), item('cota_malha', 0.015), item('moeda_antiga', 0.1)];
 const LOOT_ZUMBI             = [item('tecido', 0.3, 1, 3), item('calca_malha', 0.02), item('carne', 0.2), item('maca_espinhos', 0.01)];
+// v0.20
+const LOOT_ARANHA_FLORESTA   = [item('tecido', 0.2, 1, 2), item('adaga_larga', 0.03)];
+const LOOT_TARANTULA         = [item('sabre', 0.02), item('moeda_antiga', 0.08), item('gema', 0.02)];
+const LOOT_TROLL             = [item('carne', 0.3, 1, 2), item('cota_malha', 0.015), item('elmo_cruzado', 0.01), item('maca_espinhos', 0.015)];
+const LOOT_REI_SLIME         = [item('pocao_grande', 0.6, 1, 3), item('pocao_mana', 0.5, 1, 3), item('gema', 0.4, 1, 2), item('rubi', 0.1)];
 const LOOT_XAMA              = [item('manto', 0.4), item('elmo_cruzado', 0.3), item('gema', 0.5, 1, 2), item('machado_lua', 0.15), item('maca_espinhos', 0.12)];
 const LOOT_FANTASMA          = [item('tecido', 0.25, 1, 2), item('tunica_azul', 0.02)];
 const LOOT_FANTASMA_CINZA    = [item('tunica_verde', 0.02), item('moeda_antiga', 0.1)];
@@ -81,7 +90,9 @@ const TIPOS_MONSTRO = {
     vida: 500, ataqueMax: 0, defesa: 0, xp: 0, ouro: [0, 0], passo: 1000, visao: 0, loot: [] },
 
   // ---------- Campos do Leste (level 1–5) ----------
-    lobo: { nome: 'Lobo', sprite: 'lobo_cinza', corpo: 'lobo_cinza_morto',
+  // corpo: imagem própria do corpo em img/monstros/<corpo>.png (sem isso, o corpo é o próprio monstro achatado e cinza)
+  // altura: do pé até o topo da cabeça, pra o nome ficar logo em cima (folhas com espaço vazio em cima)
+  lobo_cinza: { nome: 'Lobo cinzento', sprite: 'lobo', corpo: 'lobo_morto', altura: 28,
     vida: 45, ataqueMax: 10, defesa: 1, xp: 25, ouro: [2, 6], passo: 390, visao: 6,
     loot: [{ item: 'presa_lobo', chance: 0.1, qtd: [1, 1] }, { item: 'pele_lobo', chance: 0.06, qtd: [1, 1] }] },
 
@@ -101,6 +112,18 @@ const TIPOS_MONSTRO = {
     alcance: 5, projetil: 'cuspe', impacto: 'veneno',
     vida: 200, ataqueMax: 34, defesa: 5, xp: 61, ouro: [4, 16], passo: 400, visao: 5,
     loot: [{ item: 'erva', chance: 0.4, qtd: [1, 3] }] },
+  // v0.20 — pântano novo (desenhos do autor). Os de cima ficam guardados pra outros lugares.
+  slime: { nome: 'Slime', sprite: 'slime', corpo: 'slime_morto', altura: 22,
+    vida: 140, ataqueMax: 26, defesa: 4, xp: 35, ouro: [4, 12], passo: 650, visao: 5,
+    loot: [item('erva', 0.2)] },
+  sapo: { nome: 'Sapo', sprite: 'sapo', corpo: 'sapo_morto', altura: 54,
+    vida: 180, ataqueMax: 32, defesa: 4, xp: 50, ouro: [5, 14], passo: 420, visao: 6,
+    loot: [item('carne', 0.2)] },
+  crocodilo: { nome: 'Crocodilo', sprite: 'crocodilo', corpo: 'crocodilo_morto', altura: 46,
+    vida: 260, ataqueMax: 42, defesa: 6, xp: 80, ouro: [7, 20], passo: 500, visao: 5,
+    loot: [item('pele_cobra', 0.2), item('carne', 0.15)] },
+  rei_slime: { nome: 'Rei Slime', sprite: 'rei_slime', corpo: 'rei_slime_morto', chefe: true, anim: ANIM.rei_slime,
+    vida: 1800, ataqueMax: 60, defesa: 8, xp: 1500, ouro: [80, 220], passo: 560, visao: 6, loot: LOOT_REI_SLIME },
   bruxa_pantano: { nome: 'Bruxa do pântano', sprite: 'bruxa_pantano', feminino: true, alcance: 4, magiaNoAlvo: ['veneno'],
     vida: 230, ataqueMax: 40, defesa: 5, xp: 73, ouro: [7, 18], passo: 480, visao: 6,
     loot: [{ item: 'erva', chance: 0.25, qtd: [1, 2] }, { item: 'pocao', chance: 0.05, qtd: [1, 1] }] },
@@ -139,6 +162,15 @@ const TIPOS_MONSTRO = {
   zumbi: { nome: 'Zumbi', sprite: 'zumbi',
     vida: 715, ataqueMax: 96, defesa: 11, xp: 259, ouro: [10, 38], passo: 650, visao: 5,
     loot: LOOT_ZUMBI },
+  // v0.20 — Floresta Negra nova (desenhos do autor). Esqueletos, zumbi e Xamã ficam guardados.
+  aranha_floresta: { nome: 'Aranha', sprite: 'aranha_floresta', corpo: 'aranha_floresta_morto', feminino: true, altura: 26,
+    vida: 520, ataqueMax: 55, defesa: 9, xp: 185, ouro: [8, 32], passo: 360, visao: 6, loot: LOOT_ARANHA_FLORESTA },
+  tarantula: { nome: 'Tarântula', sprite: 'tarantula', corpo: 'tarantula_morto', feminino: true, altura: 52,
+    vida: 650, ataqueMax: 72, defesa: 10, xp: 230, ouro: [9, 36], passo: 420, visao: 6, loot: LOOT_TARANTULA },
+  troll_sombrio: { nome: 'Troll sombrio', sprite: 'troll_sombrio', corpo: 'troll_sombrio_morto', altura: 48,
+    vida: 780, ataqueMax: 95, defesa: 11, xp: 280, ouro: [10, 40], passo: 560, visao: 5, loot: LOOT_TROLL },
+  centauro_sombrio: { nome: 'Centauro Sombrio', sprite: 'centauro_sombrio', corpo: 'centauro_sombrio_morto', chefe: true, anim: ANIM.centauro_sombrio,
+    vida: 5500, ataqueMax: 160, defesa: 13, xp: 4500, ouro: [165, 440], passo: 420, visao: 7, loot: LOOT_XAMA },
   xama_sombrio: { nome: 'Xamã das Sombras', sprite: 'xama_sombrio', chefe: true, alcance: 4, magiaNoAlvo: ['veneno', 'raio'],
     vida: 5000, ataqueMax: 150, defesa: 13, xp: 4100, ouro: [165, 440], passo: 500, visao: 7,
     loot: LOOT_XAMA },
@@ -202,6 +234,14 @@ const TIPOS_MONSTRO = {
 const ELEMENTOS = { fogo: 'fogo', gelo: 'gelo', vento: 'vento', raio: 'raio' };
 const FRAQUEZAS = {
   lobo_cinza:       { fogo: 1.2 },
+  slime:            { raio: 1.5, fogo: 0.8 },
+  sapo:             { gelo: 1.4, vento: 0.8 },
+  crocodilo:        { raio: 1.3, gelo: 0.8 },
+  rei_slime:        { raio: 1.3, fogo: 0.7 },
+  aranha_floresta:  { fogo: 1.5, gelo: 0.8 },
+  tarantula:        { fogo: 1.4, vento: 0.8 },
+  troll_sombrio:    { fogo: 1.3, raio: 1.2, gelo: 0.7 },
+  centauro_sombrio: { raio: 1.2, vento: 0.7 },
   cobra_pantano:    { gelo: 1.5, raio: 1.2 },
   cogumelo:         { fogo: 1.5, vento: 0.8 },
   lodo:             { raio: 1.5, fogo: 0.7 },
