@@ -19,8 +19,8 @@ const CONFIG = {
   INTERVALO_ATAQUE: 2000, // tempo entre ataques (jogador e monstros), como no Tibia
   // vida/mana inicial e por level ficam em classes.js
   // Regeneração: só acontece se você NÃO estiver com fome (coma algo!)
-  REGEN_VIDA: 3,          // vida recuperada a cada REGEN_INTERVALO
-  REGEN_MANA: 2,          // mana recuperada a cada REGEN_INTERVALO
+  REGEN_VIDA: 5,          // vida recuperada a cada REGEN_INTERVALO
+  REGEN_MANA: 3,          // mana recuperada a cada REGEN_INTERVALO
   REGEN_INTERVALO: 10000, // 10 segundos
   FOME_MAX_MIN: 15,       // comer acumula no máximo 15 minutos sem fome
   FOME_INICIAL_MIN: 5,    // personagem novo começa alimentado por 5 minutos
