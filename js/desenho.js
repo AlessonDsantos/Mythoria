@@ -351,8 +351,12 @@ function desenharImagemMonstro(m, sx, sy, agora, morto) {
   const tipo = TIPOS_MONSTRO[m.tipo];
   const imagem = img[tipo.sprite];
   const andando = !morto && monstroAndando(m, agora);
-
-  ctx.save();
+ 
+  if (morto && tipo.corpo && img[tipo.corpo]) {
+    ctx.drawImage(img[tipo.corpo], sx, sy);
+    return;
+  
+    ctx.save();
   if (morto) {
     // Corpo: achatado, cinza e meio transparente
     ctx.translate(0, sy + T - 2);
