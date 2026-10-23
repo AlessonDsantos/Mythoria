@@ -56,6 +56,9 @@ const EFEITOS = {
   espada_voo:     { img: 'fx_espada_voo',     quadro: 64, quadros: 6, duracao: 300, escala: 0.8 },
   espada_impacto: { img: 'fx_espada_impacto', quadro: 64, quadros: 8, duracao: 400, escala: 1 },
   chuva_espadas: { img: 'fx_chuva_espadas', quadro: 96, quadros: 16, duracao: 1100, escala: 1, base: true },
+  // v0.20: cuspe da planta carnívora (desenho do autor): voando (aponta pro alvo) e espirrando no alvo
+  cuspe_planta:     { img: 'fx_cuspe_planta',     quadro: 48, quadros: 9, duracao: 630, escala: 0.9 },
+  cuspe_planta_fim: { img: 'fx_cuspe_planta_fim', quadro: 48, quadros: 3, duracao: 300, escala: 0.9 },
   espada_giro: { img: 'fx_espada_giro', quadro: 96, quadros: 12, duracao: 600, escala: 1 },
 };
 
