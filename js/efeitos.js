@@ -56,7 +56,7 @@ const EFEITOS = {
   espada_voo:     { img: 'fx_espada_voo',     quadro: 64, quadros: 6, duracao: 300, escala: 0.8 },
   espada_impacto: { img: 'fx_espada_impacto', quadro: 64, quadros: 8, duracao: 400, escala: 1 },
   chuva_espadas: { img: 'fx_chuva_espadas', quadro: 96, quadros: 16, duracao: 1100, escala: 1, base: true },
-  espada_giro: { img: 'fx_espada_giro', quadro: 96, quadros: 12, duracao: 600, escala: 1.6 },
+  espada_giro: { img: 'fx_espada_giro', quadro: 96, quadros: 12, duracao: 600, escala: 1 },
 };
 
 const efeitosAtivos = [];
