@@ -86,7 +86,7 @@ const ITENS = {
 
   // ---------- Armas de distância ----------
   shuriken: { nome: 'Shuriken', tipo: 'arma', categoria: 'arremesso', skill: 'distance',
-              ataque: 19, acerto: 0.90, alcance: 4, arremesso: true, quebraEntre: [3, 10], preco: 3, valor: 1, empilha: true,
+              ataque: 19, acerto: 0.90, alcance: 4, arremesso: true, infinita: true , preco: 3, valor: 1, empilha: true,
               descricao: 'Estrela de arremesso. Cada uma quebra depois de 3 a 10 ataques.' },
   shuriken_aprendiz: { nome: 'Shuriken do aprendiz', tipo: 'arma', categoria: 'arremesso', skill: 'distance',
               ataque: 13, acerto: 0.90, alcance: 4, arremesso: true, infinita: true, valor: 0,
